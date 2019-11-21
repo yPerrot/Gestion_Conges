@@ -70,8 +70,8 @@ $( function() {
 				</select>
 			</div>
 			
-			<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Valider</button >
-			<button class="btn btn-outline-danger my-2 my-sm-0" type="submit">Annuler</button >
+			<button class="btn btn-outline-success my-2 my-sm-0" onclick="location.href='User.jsp'" type="submit">Valider</button >
+			<button class="btn btn-outline-danger my-2 my-sm-0" onclick="location.href='User.jsp'" type="submit">Annuler</button >
 			
 		</div>
 
