@@ -1,7 +1,6 @@
 package org.gdc.controllers;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -10,17 +9,22 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.gdc.services.AuthService;
+import org.gdc.services.AuthServiceImpl;
+
 /**
  * Servlet implementation class LoginController
  */
 @WebServlet("/LoginController")
-public class LoginController extends HttpServlet {
+public class AuthController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	
+	private AuthService authService = new AuthServiceImpl();
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public LoginController() {
+    public AuthController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -38,16 +42,20 @@ public class LoginController extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // read form fields
-        String username = request.getParameter("inputEmail");
+        String username = request.getParameter("inputUser");
         String password = request.getParameter("inputPassword");
-         
-        System.out.println("username: " + username);
-        System.out.println("password: " + password);
-         
-        HttpSession session = request.getSession();
-        session.setAttribute("session", "on");
         
-        response.sendRedirect(request.getContextPath() + "/User");
+        // TODO : INCLURE ICI LE CODE DE Authentification.java
+        
+        String realPass = authService.getPasswordByUser(username);
+        if(password.equals(realPass)) {
+            HttpSession session = request.getSession();
+            session.setAttribute("session", "on");
+        	response.sendRedirect(request.getContextPath() + "/User");
+        } else {
+        	System.out.println("Erreur de mot de passe");
+        	response.sendRedirect(request.getContextPath() + "/Authen.jsp");
+        }
 	}
 
 }

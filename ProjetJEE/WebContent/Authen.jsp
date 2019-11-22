@@ -25,11 +25,11 @@ Boolean errorMeet = request.getAttribute("BadAuthen")==null?null:(Boolean)reques
 	                    <h5 class="card-title text-center">Authentification</h5>
 	                    <form class="form-signin" action="LoginController" method="POST">
 	                        <div class="form-label-group">
-	                            <label for="inputEmail">Email address</label>
-	                            <input type="email" id="inputEmail" name="inputEmail" class="form-control" placeholder="Email address" required autofocus>
+	                            <label for="inputEmail">Nom d'utilisateur</label>
+	                            <input type="text" id="inputEmail" name="inputUser" class="form-control" placeholder="Username" required autofocus>
 	                        </div>
 	                        <div class="form-label-group">
-	                            <label for="inputPassword">Password</label>
+	                            <label for="inputPassword">Mot de passe</label>
 	                            <input type="password" id="inputPassword" name="inputPassword" class="form-control" placeholder="Password" required>
 	                        </div>
 							<% if (errorMeet != null) {%>
