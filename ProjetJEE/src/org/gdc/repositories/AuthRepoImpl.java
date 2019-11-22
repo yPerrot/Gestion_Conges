@@ -10,7 +10,7 @@ import org.testProject.DBManager;
 public class AuthRepoImpl implements AuthRepo {
 
 	@Override
-	public String getPasswordByUser(String username) {
+	public String getPassword(String username) {
 		Connection conn = null;
 		Statement stmt = null;
 		ResultSet rs = null;

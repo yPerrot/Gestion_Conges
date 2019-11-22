@@ -8,7 +8,7 @@ public class AuthServiceImpl implements AuthService {
 
 	@Override
 	public String getPasswordByUser(String username) {
-		return authRepo.getPasswordByUser(username);
+		return authRepo.getPassword(username);
 	}  
 
 }

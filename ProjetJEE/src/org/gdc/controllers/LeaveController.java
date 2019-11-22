@@ -11,13 +11,13 @@ import javax.servlet.http.HttpServletResponse;
  * Servlet implementation class LeaveManagerController
  */
 @WebServlet("/LeaveManagerController")
-public class LeaveManagerController extends HttpServlet {
+public class LeaveController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public LeaveManagerController() {
+    public LeaveController() {
         super();
         // TODO Auto-generated constructor stub
     }
