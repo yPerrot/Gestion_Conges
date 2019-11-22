@@ -21,7 +21,7 @@ String name = (String)request.getAttribute("UserName");
 			
 			<div class="my-2 my-lg-0">
 				<span ><%=name%></span>
-		    	<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Log out</button >
+		    	<button class="btn btn-outline-success my-2 my-sm-0" onclick="location.href='Authen.jsp'" type="submit">Log out</button >
 			</div>
 		</nav>
 		
@@ -32,7 +32,7 @@ String name = (String)request.getAttribute("UserName");
 				<h1>Vos congés : </h1>
 			</div>
 			<div class="col-xl-2 align-self-center">
-				<button class="btn btn-secondary">Nouveau congé</button>
+				<button class="btn btn-secondary" onclick="location.href='DemandeConge.jsp'">Nouveau congé</button>
 			</div>
 		</div>
 		
