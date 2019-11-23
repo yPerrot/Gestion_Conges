@@ -13,6 +13,7 @@
     <servlet-name>HelloWorld</servlet-name>
     <url-pattern>/HelloWorld</url-pattern>
   </servlet-mapping>
+
   
   <!-- Authentification -->
   <servlet>

@@ -16,7 +16,7 @@ String pageTitle= "PUISQUE C'EST NOTRE PROJET !";
 	            <div class="card card-signin my-5">
 	                <div class="card-body">
 	                    <h5 class="card-title text-center">Authentification</h5>
-	                    <form class="form-signin" method="POST">
+	                    <form class="form-signin" action="LoginController" method="POST">
 	                        <div class="form-label-group">
 	                            <label for="inputEmail">Email address</label>
 	                            <input type="email" id="inputEmail" name="inputEmail" class="form-control" placeholder="Email address" required autofocus>
