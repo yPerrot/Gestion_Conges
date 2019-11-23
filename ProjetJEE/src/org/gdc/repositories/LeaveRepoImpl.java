@@ -1,19 +1,43 @@
 package org.gdc.repositories;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.gdc.models.Conge;
-import org.testProject.DBManager;
+import javax.ejb.Stateless;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+import javax.persistence.Query;
 
+import org.gdc.models.Authentification;
+import org.gdc.models.Conge;
+import org.gdc.models.Employe;
+
+@Stateless
 public class LeaveRepoImpl implements LeaveRepo {
 
 	@Override
 	public List<Conge> getLeaves(String username) {
+		EntityManagerFactory entityManagerFactory = null;
+		EntityManager entityManager = null;
+		List<Conge> listLeaves = new ArrayList<Conge>();
+		try {
+			entityManagerFactory = Persistence.createEntityManagerFactory("ProjetJEE");
+			entityManager = entityManagerFactory.createEntityManager();
+			
+//			Query query = entityManager.createQuery("select c from Conge c where c.login = :username") ;
+			List<Employe> a = entityManager.createNamedQuery("Employe.findAll").getResultList();
+//			query.setParameter("username", username);
+			System.out.println("a" + a);
+
+			for (Conge article : listLeaves) {
+				System.out.println( article );
+			}
+		} finally {
+			if ( entityManager != null ) entityManager.close();
+			if ( entityManagerFactory != null ) entityManagerFactory.close();
+		}
+/*
 		Connection conn = null;
 		Statement stmt = null;
 		ResultSet rs = null;
@@ -23,28 +47,9 @@ public class LeaveRepoImpl implements LeaveRepo {
 			if (conn != null) {
 				stmt = conn.createStatement();
 				rs = stmt.executeQuery("SELECT * FROM Authentification");
-				while (rs.next()) {
-					String login = rs.getString("login");
-					String begin_date = rs.getString("date_debut");
-					String end_date = rs.getString("date_fin");
-					int duration = rs.getInt("date_debut");
-					String reason = rs.getString("motif");
-					String type_leave = rs.getString("type_conges");
-					String state = rs.getString("etat");
-					String valid_date = rs.getString("date_validation");
-					String comment = rs.getString("commentaire");
-					if(username.equals(login)) {
-						Conge conge = Conge.builder()
-						.login(login)
-						.date_debut(begin_date)
-						.date_fin(end_date)
-						.duree(duration)
-						.motif(reason)
-						.type_conges(type_leave)
-						.etat(state)
-						.build();
-						listLeaves.add(conge);
-					}
+				for (Iterator i = ((SQLException) rs).iterator(); i.hasNext();) {
+					Conge conge = (Conge) i.next();
+					System.out.println("Conge " + conge.getMotif());
 				}
 			}
 		} catch (SQLException e) {
@@ -53,7 +58,7 @@ public class LeaveRepoImpl implements LeaveRepo {
 			if (conn != null) {
 				DBManager.getInstance().cleanup(conn, stmt, rs);
 			}
-		}
+		}*/
 		return listLeaves;
 	}
 

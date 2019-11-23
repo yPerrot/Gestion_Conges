@@ -1,7 +1,6 @@
+##CREATE DATABASE ProjetJEE;
 
-##CREATE DATABASE Conges;
-
-##USE Conges;
+##USE ProjetJEE;
 ##DROP TABLE Authentification,Conge,Employe,Ref_Equipes,Ref_Etat_Conges,Ref_Type_Conges,Ref_Fonction,Ref_Motif_Conges,Agenda;
 
 CREATE TABLE Ref_Fonction (
@@ -79,7 +78,6 @@ INSERT into Employe VALUES ("cyoudec","Clement","YOUDEC","4 rue de rouge","Lanni
 INSERT into Employe VALUES ("yperrot","Yohan","PERROT","4 rue de bleu","Lannion","22300","Informatique","Chef d'équipe","yperrot@enssat.fr",3);
 INSERT into Employe VALUES ("lgagnant","Laurre","GAGNANT","4 rue de orange","Lannion","22300","Informatique","Membre d'équipe","lgagnant@enssat.fr",3);
 INSERT into Employe VALUES ("mboue","Martin","BOUE","4 rue de violet","Lannion","22300","Comptabilité","Chef d'équipe","mboue@enssat.fr",1);
-
 INSERT into Employe VALUES ("tlegoff","Thomas","LE GOFF","4 rue de jaune","Lannion","22300","Comptabilité","Membre d'équipe","tlegoff@enssat.fr",50);
 
 CREATE TABLE Conge (
@@ -115,6 +113,9 @@ CREATE TABLE Authentification (
 	FOREIGN KEY (login)
 		REFERENCES Employe (login)
 );
+
+INSERT INTO Authentification VALUES ("cyoudec", "admin");
+INSERT INTO Authentification VALUES ("lgagnant", "admin");
 
 
 CREATE TABLE Rendez_vous (

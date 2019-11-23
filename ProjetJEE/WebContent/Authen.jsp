@@ -23,7 +23,7 @@ Boolean errorMeet = request.getAttribute("BadAuthen")==null?null:(Boolean)reques
 	            <div class="card card-signin my-5">
 	                <div class="card-body">
 	                    <h5 class="card-title text-center">Authentification</h5>
-	                    <form class="form-signin" action="LoginController" method="POST">
+	                    <form class="form-signin" action="AuthController" method="POST">
 	                        <div class="form-label-group">
 	                            <label for="inputEmail">Nom d'utilisateur</label>
 	                            <input type="text" id="inputEmail" name="inputUser" class="form-control" placeholder="Username" required autofocus>

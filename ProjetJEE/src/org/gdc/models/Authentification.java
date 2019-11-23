@@ -27,6 +27,6 @@ public class Authentification implements Serializable {
 
 	//bi-directional one-to-one association to Employe
 	@OneToOne
-	@JoinColumn(name="login")
+	@PrimaryKeyJoinColumn(name="login")
 	private Employe employe;
 }

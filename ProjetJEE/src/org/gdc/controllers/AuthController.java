@@ -9,17 +9,17 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.gdc.services.AuthService;
-import org.gdc.services.AuthServiceImpl;
+import org.gdc.repositories.AuthRepo;
+import org.gdc.repositories.AuthRepoImpl;
 
 /**
  * Servlet implementation class LoginController
  */
-@WebServlet("/LoginController")
+@WebServlet("/AuthController")
 public class AuthController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
-	private AuthService authService = new AuthServiceImpl();
+	private AuthRepo authRepo = new AuthRepoImpl();
        
     /**
      * @see HttpServlet#HttpServlet()
@@ -33,8 +33,7 @@ public class AuthController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		this.getServletContext().getRequestDispatcher("/Authen.jsp").forward( request, response );
 	}
 
 	/**
@@ -45,13 +44,12 @@ public class AuthController extends HttpServlet {
         String username = request.getParameter("inputUser");
         String password = request.getParameter("inputPassword");
         
-        // TODO : INCLURE ICI LE CODE DE Authentification.java
-        
-        String realPass = authService.getPasswordByUser(username);
+        String realPass = authRepo.getPassword(username);
         if(password.equals(realPass)) {
             HttpSession session = request.getSession();
             session.setAttribute("session", "on");
-        	response.sendRedirect(request.getContextPath() + "/User");
+            session.setAttribute("username", username);
+        	response.sendRedirect(request.getContextPath() + "/LeaveController");
         } else {
         	System.out.println("Erreur de mot de passe");
         	response.sendRedirect(request.getContextPath() + "/Authen.jsp");
