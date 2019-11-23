@@ -4,7 +4,13 @@
 Boolean errorMeet = request.getAttribute("BadAuthen")==null?null:(Boolean)request.getAttribute("BadAuthen");
 String pageTitle= "PUISQUE C'EST NOTRE PROJET !";
 %>
-<%@ include file="parts/header.jsp" %>  
+<!DOCTYPE html>
+<html>
+	<head>
+		<%@ include file="parts/header.jsp" %>  
+		<title>Authentification</title>
+	</head>
+<body> 
 	
 	<nav class="navbar navbar-expand-lg navbar-light bg-light">
 	    <a class="navbar-brand">Notre projet</a>
