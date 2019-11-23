@@ -29,16 +29,16 @@
   </servlet-mapping>
   
     
-  <!-- User -->
+  <!-- GestionPerso -->
   <servlet>
     <description></description>
-    <display-name>User</display-name>
-    <servlet-name>User</servlet-name>
+    <display-name>GestionPerso</display-name>
+    <servlet-name>GestionPerso</servlet-name>
     <servlet-class>org.testProject.User</servlet-class>
   </servlet>
   <servlet-mapping>
-    <servlet-name>User</servlet-name>
-    <url-pattern>/User</url-pattern>
+    <servlet-name>GestionPerso</servlet-name>
+    <url-pattern>/GestionPerso</url-pattern>
   </servlet-mapping>
   
   <welcome-file-list>

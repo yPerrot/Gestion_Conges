@@ -2,16 +2,9 @@
     pageEncoding="ISO-8859-1"%>
 <%
 Boolean errorMeet = request.getAttribute("BadAuthen")==null?null:(Boolean)request.getAttribute("BadAuthen");
+String pageTitle= "PUISQUE C'EST NOTRE PROJET !";
 %>
-    
-<!DOCTYPE html>
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>PUISQUE C'EST NOTRE PROJET !</title>
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-</head>
-<body>
+<%@ include file="parts/header.jsp" %>  
 	
 	<nav class="navbar navbar-expand-lg navbar-light bg-light">
 	    <a class="navbar-brand">Notre projet</a>
