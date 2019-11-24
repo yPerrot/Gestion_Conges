@@ -1,15 +1,26 @@
 <%@ include file="parts/load.jsp"%>
+<%@page import="java.util.ArrayList,org.gdc.models.Leave,java.util.Date"%>
 <%
 String name = (String)request.getAttribute("UserName");
 request.setAttribute("nbCongesRestant", 5);
 
+ArrayList listLeaves = new ArrayList<Leave>();
+listLeaves.add(new Leave("yperrot",new Date(),new Date(),10,"raison","Maladie","validÈ",new Date(),"wording"));
+//(String login, Date beginDate, Date endDate, int duration, String reason, String type, String state, Date validDate, String wording)
+request.setAttribute("listLeaves", listLeaves);
 
+ArrayList listLeavesApproved = new ArrayList<Leave>();
+listLeavesApproved.add(new Leave("yperrot",new Date(),new Date(),10,"raison","Maladie","validÈ",new Date(),"wording"));
+request.setAttribute("listLeavesApproved", listLeavesApproved);
+
+Leave selectedLeave = null;
+request.setAttribute("selectedLeave", selectedLeave);
 %>
 <!DOCTYPE html>
 <html>
 <head>
 <%@ include file="parts/includes.jsp"%>
-<title>Gestion des cong√©s de ${emp.getFname()}</title>
+<title>Gestion des conges de ${emp.getFname()}</title>
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
 	integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
 	crossorigin="anonymous"></script>
@@ -34,30 +45,67 @@ request.setAttribute("nbCongesRestant", 5);
 
 	<!-- Debut Tests PopUp  -->
 
-	<button type="button" class="btn btn-primary" data-toggle="modal"
-		data-target="#exampleModal">Launch demo modal</button>
+	<!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#SuppressionModal">Launch demo modal</button> -->
 
-	<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
-		aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal fade" id="SuppressionModal" tabindex="-1" role="dialog"
+		aria-labelledby="SuppressionModalLabel" aria-hidden="true">
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+					<h5 class="modal-title" id="SuppressionModalLabel">Validation suppression</h5>
 					<button type="button" class="close" data-dismiss="modal"
 						aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button>
 				</div>
-				<div class="modal-body">...</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-secondary"
-						data-dismiss="modal">Close</button>
-					<button type="button" class="btn btn-primary">Save changes</button>
+				<div class="modal-body">
+					<div class="row">
+						<div class="col">
+							<p>Voulez-vous validation la suppression du congÈ : </p>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col text-right">
+						
+							<button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+							<button type="button" class="btn btn-primary">Valider</button>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
 	</div>
 
+
+	<div class="modal fade" id="VisualisationConge" tabindex="-1" role="dialog"
+		aria-labelledby="VisualisationCongeLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="VisualisationCongeLabel">Visualisation conge</h5>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<div class="row">
+						<div class="col">
+							<%-- <p>Voulez-vous validation la suppression du congÈ : <c:out value="${selectedLeave==null;}"/></p> --%>
+							<p><c:out value="${selectedLeave==null}" /></p>
+							<p>${selectedLeave==null}</p>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col text-right">
+							<button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+							<button type="button" class="btn btn-primary">Valider</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 	<!-- Fin Tests PopUp  -->
 
 	<div class="container">
@@ -87,52 +135,15 @@ request.setAttribute("nbCongesRestant", 5);
 			</div>
 			<div class="col-2 align-self-center">
 				<button class="btn btn-secondary"
-					onclick="location.href='DemandeConge.jsp'">Nouveau cong√©</button>
+					onclick="location.href='DemandeConge.jsp'">Nouveau conge</button>
 			</div>
 		</div>
 		<table class="table table-bordered">
 			<thead class="thead-light">
 				<tr>
 					<th scope="col">#</th>
-					<th scope="col">Date de d√©but</th>
+					<th scope="col">Date de debut</th>
 					<th scope="col">Date de fin</th>
-					<th scope="col">Motif</th>
-					<th scope="col">Type</th>
-					<th scope="col"></th>
-				</tr>
-			</thead>
-			<tbody>
-				<c:forEach items="${listLeaves}" var="item" varStatus="loop">
-					<c:if test="${item.getValidDate() == null}">
-						<tr>
-							<th scope="row">${loop.index}</th>
-							<td><c:out value="${item.getBeginDate()}" /></td>
-							<td><c:out value="${item.getEndDate()}" /></td>
-							<td><c:out value="${item.getReason()}" /></td>
-							<td><c:out value="${item.getType()}" /></td>
-							<td class="text-center"><input type="button"
-								id="modifie-site" value="Modifier" /> <input type="button"
-								id="delete-site" value="Supprimer" /></td>
-						</tr>
-					</c:if>
-				</c:forEach>
-			</tbody>
-		</table>
-
-		<div class="row">
-			<div class="col">
-				<h1>Vos cong√©s</h1>
-			</div>
-		</div>
-
-		<table class="table table-bordered">
-
-			<thead class="thead-light">
-				<tr>
-					<th scope="col">#</th>
-					<th scope="col">Date de d√©but</th>
-					<th scope="col">Date de fin</th>
-					<th scope="col">Motif</th>
 					<th scope="col">Type</th>
 					<th scope="col"></th>
 				</tr>
@@ -141,14 +152,52 @@ request.setAttribute("nbCongesRestant", 5);
 				<c:forEach items="${listLeaves}" var="item" varStatus="loop">
 					<c:if test="${item.getValidDate() != null}">
 						<tr>
-							<th scope="row">${loop.index}</th>
+							<th scope="row">${loop.index + 1}</th>
 							<td><c:out value="${item.getBeginDate()}" /></td>
 							<td><c:out value="${item.getEndDate()}" /></td>
-							<td><c:out value="${item.getReason()}" /></td>
 							<td><c:out value="${item.getType()}" /></td>
-							<td class="text-center"><input type="button"
-								id="modifie-site" value="Modifier" /> <input type="button"
-								id="delete-site" value="Supprimer" /></td>
+							<td class="text-center">
+								<input class="btn btn-outline-dark" type="button" id="modifie-site" value="Modifier" /> 
+								<input class="btn btn-outline-dark" data-toggle="modal" data-target="#SuppressionModal"
+									type="button" id="delete-site" value="Supprimer" />
+								<input class="btn btn-outline-dark btn-sm" data-toggle="modal" data-target="#VisualisationConge"
+									type="button" id="view_info" value="..." />
+							</td>
+						</tr>
+					</c:if>
+				</c:forEach>
+			</tbody>
+		</table>
+
+		<div class="row">
+			<div class="col">
+				<h1>Vos conges</h1>
+			</div>
+		</div>
+
+		<table class="table table-bordered">
+
+			<thead class="thead-light">
+				<tr>
+					<th scope="col">#</th>
+					<th scope="col">Date de debut</th>
+					<th scope="col">Date de fin</th>
+					<th scope="col">Type</th>
+					<th scope="col"></th>
+				</tr>
+			</thead>
+			<tbody>
+				<c:forEach items="${listLeavesApproved}" var="item" varStatus="loop">
+					<c:if test="${item.getValidDate() != null}">
+						<tr>
+							<th scope="row">${loop.index + 1}</th>
+							<td><c:out value="${item.getBeginDate()}" /></td>
+							<td><c:out value="${item.getEndDate()}" /></td>
+							<td><c:out value="${item.getType()}" /></td>
+							<td class="text-center">
+								<input class="btn btn-outline-dark btn-sm" type="button" id="view_info" 
+								 onclick="${System.out.println(item.getType());selectedLeave=item}" data-toggle="modal" data-target="#VisualisationConge" value="..." />
+							</td>
 						</tr>
 					</c:if>
 				</c:forEach>
