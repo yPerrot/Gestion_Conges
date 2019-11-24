@@ -1,9 +1,15 @@
 <%@ include file="parts/load.jsp"%>
+<%
+String name = (String)request.getAttribute("UserName");
+request.setAttribute("nbCongesRestant", 5);
+
+
+%>
 <!DOCTYPE html>
 <html>
 <head>
 <%@ include file="parts/includes.jsp"%>
-<title>Gestion des congés de ${emp.getFname()}</title>
+<title>Gestion des congÃ©s de ${emp.getFname()}</title>
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
 	integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
 	crossorigin="anonymous"></script>
@@ -81,14 +87,14 @@
 			</div>
 			<div class="col-2 align-self-center">
 				<button class="btn btn-secondary"
-					onclick="location.href='DemandeConge.jsp'">Nouveau congé</button>
+					onclick="location.href='DemandeConge.jsp'">Nouveau congÃ©</button>
 			</div>
 		</div>
 		<table class="table table-bordered">
 			<thead class="thead-light">
 				<tr>
 					<th scope="col">#</th>
-					<th scope="col">Date de début</th>
+					<th scope="col">Date de dÃ©but</th>
 					<th scope="col">Date de fin</th>
 					<th scope="col">Motif</th>
 					<th scope="col">Type</th>
@@ -115,15 +121,16 @@
 
 		<div class="row">
 			<div class="col">
-				<h1>Vos congés</h1>
+				<h1>Vos congÃ©s</h1>
 			</div>
 		</div>
 
 		<table class="table table-bordered">
+
 			<thead class="thead-light">
 				<tr>
 					<th scope="col">#</th>
-					<th scope="col">Date de début</th>
+					<th scope="col">Date de dÃ©but</th>
 					<th scope="col">Date de fin</th>
 					<th scope="col">Motif</th>
 					<th scope="col">Type</th>
@@ -146,11 +153,21 @@
 					</c:if>
 				</c:forEach>
 			</tbody>
+
 		</table>
 
 		<!-- Fin container -->
-	</div>
-
-	<%@ include file="parts/footer.jsp"%>
-</body>
+		</div>	
+		
+		<script>
+			function suppressionConge() {
+				
+			}
+			
+			function openPopUpSuppression() {
+				
+			}
+		</script>
+		
+	</body>
 </html>
