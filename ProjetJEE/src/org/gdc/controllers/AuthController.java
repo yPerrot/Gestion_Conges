@@ -1,7 +1,6 @@
 package org.gdc.controllers;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -10,17 +9,22 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.gdc.repositories.AuthRepo;
+import org.gdc.repositories.AuthRepoImpl;
+
 /**
  * Servlet implementation class LoginController
  */
-@WebServlet("/LoginController")
-public class LoginController extends HttpServlet {
+@WebServlet("/AuthController")
+public class AuthController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	
+	private AuthRepo authRepo = new AuthRepoImpl();
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public LoginController() {
+    public AuthController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -29,8 +33,7 @@ public class LoginController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		this.getServletContext().getRequestDispatcher("/Authentification.jsp").forward( request, response );
 	}
 
 	/**
@@ -38,16 +41,19 @@ public class LoginController extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // read form fields
-        String username = request.getParameter("inputEmail");
+        String username = request.getParameter("inputUser");
         String password = request.getParameter("inputPassword");
-         
-        System.out.println("username: " + username);
-        System.out.println("password: " + password);
-         
-        HttpSession session = request.getSession();
-        session.setAttribute("session", "on");
         
-        response.sendRedirect(request.getContextPath() + "/User");
+        String realPass = authRepo.getPassword(username);
+        if(password.equals(realPass)) {
+            HttpSession session = request.getSession();
+            session.setAttribute("session", "on");
+            session.setAttribute("username", username);
+        	response.sendRedirect(request.getContextPath() + "/LeaveController");
+        } else {
+        	System.out.println("Erreur de mot de passe");
+        	response.sendRedirect(request.getContextPath() + "/Authentification.jsp");
+        }
 	}
 
 }

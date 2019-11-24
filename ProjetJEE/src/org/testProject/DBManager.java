@@ -13,15 +13,10 @@ public class DBManager {
 
 	private static DBManager instance;
 
-	private ResourceBundle properties;
-
-	private static String resourceBundle = "config";
-
 	private DBManager() {
-		properties = ResourceBundle.getBundle(resourceBundle);
 
 		try {
-			Class.forName(properties.getString("DB_DRIVER"));
+			Class.forName("com.mysql.cj.jdbc.Driver");
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -42,8 +37,7 @@ public class DBManager {
 
 		Connection connection = null;
 		try {
-			connection = DriverManager.getConnection(properties.getString("JDBC_URL"), properties.getString("DB_LOGIN"),
-					properties.getString("DB_PASSWORD"));
+			connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/ProjetJEE", "root", "mysql");
 
 		} catch (SQLException sqle) {
 			sqle.printStackTrace();
@@ -80,7 +74,7 @@ public class DBManager {
 	}
 
 	/**
-	 * permet de tester la connexion à la DB
+	 * permet de tester la connexion ï¿½ la DB
 	 * 
 	 * @param args
 	 */
