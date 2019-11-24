@@ -48,7 +48,7 @@ public class LeaveController extends HttpServlet {
 			List<Leave> listLeaves = leaveRepo.getLeaves(emp);
 			request.setAttribute("emp", emp);
 			request.setAttribute("listLeaves", listLeaves);
-			this.getServletContext().getRequestDispatcher("/User.jsp").forward( request, response );
+			this.getServletContext().getRequestDispatcher("/GestionCongesPerso.jsp").forward( request, response );
 		}
 	}
 

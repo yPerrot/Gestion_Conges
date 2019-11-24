@@ -33,7 +33,7 @@ public class AuthController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		this.getServletContext().getRequestDispatcher("/Authen.jsp").forward( request, response );
+		this.getServletContext().getRequestDispatcher("/Authentification.jsp").forward( request, response );
 	}
 
 	/**
@@ -52,7 +52,7 @@ public class AuthController extends HttpServlet {
         	response.sendRedirect(request.getContextPath() + "/LeaveController");
         } else {
         	System.out.println("Erreur de mot de passe");
-        	response.sendRedirect(request.getContextPath() + "/Authen.jsp");
+        	response.sendRedirect(request.getContextPath() + "/Authentification.jsp");
         }
 	}
 
