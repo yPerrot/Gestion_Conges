@@ -3,35 +3,42 @@
     
 <%
 String name = (String)request.getAttribute("UserName");
+request.setAttribute("name", name);
 %>
     
 <!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Statistiques</title>
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
-
+	<%@ include file="parts/includes.jsp" %> 
+	<title>Statistiques</title>
+	<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
 </head>
 <body>
-		<nav class="navbar navbar-expand-lg navbar-light bg-light">
-	    	<a class="navbar-brand">Notre projet</a>
-			<div class="collapse navbar-collapse">
-	    		<a  class="nav-link" href="#">Congés</a>
-	    		<a  class="nav-link" href="#">Statistic</a>
+	<%@ include file="parts/navbar.jsp" %> 
+	
+	<div class="container">
+	
+		<div class="row m-3">
+			<div class="col-auto">
+	  			<h2>Statistique : </h2>
 			</div>
-			
-			<div class="my-2 my-lg-0">
-				<span ><%=name%></span>
-		    	<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Log out</button >
+			<div class="col">
+				<select  class="custom-select">
+					<option selected value="1">One</option>
+					<option value="2">Two</option>
+					<option value="3">Three</option>
+				</select>
 			</div>
-		</nav>
+		</div>
 		
-		<div class="container">
-
+		<div class="row">
+			<div class="col">
+			  <canvas id="myChart"></canvas>
+			</div>
+		</div>	
 		
-			<canvas id="myChart" width="200" height="200"></canvas>
+		
+		
 			<script>
 			var ctx = document.getElementById('myChart').getContext('2d');
 			var myChart = new Chart(ctx, {
@@ -71,8 +78,7 @@ String name = (String)request.getAttribute("UserName");
 			    }
 			});
 			</script>
+
+	</div>
 		
-		</div>
-		
-</body>
-</html>
+<%@ include file="parts/footer.jsp" %> 

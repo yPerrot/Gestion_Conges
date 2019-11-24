@@ -1,6 +1,10 @@
 package org.testProject;
 
 import java.io.IOException;
+import java.security.MessageDigest;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -110,6 +114,35 @@ public class Authentication extends HttpServlet {
 		}
 		
 		
+	}
+	
+	private boolean verifAuthentification(String login, String password) {
+
+		Connection conn = null;
+		Statement stat = null;
+		ResultSet rs = null;
+		try {
+			conn = DBManager.getInstance().getConnection();
+			if (conn != null) {
+				stat = conn.createStatement();
+				rs = stat.executeQuery("SELECT * FROM Authentification WHERE login = '" + login + "' AND password = '" + password + "';");
+				while (rs.next()) {
+					String id = rs.getString("host");
+					String title = rs.getString("user");
+					
+					System.out.println(id + " " + title );
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+
+		} finally {
+			if (conn != null) {
+				DBManager.getInstance().cleanup(conn, stat, rs);
+			}
+		}
+		
+		return false;
 	}
 	
 }
