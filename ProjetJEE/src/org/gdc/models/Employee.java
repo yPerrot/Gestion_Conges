@@ -1,7 +1,5 @@
 package org.gdc.models;
 
-import java.util.List;
-
 public class Employee {
 	private String login;
 	private String fname;
@@ -12,13 +10,13 @@ public class Employee {
 	private String team;
 	private String role;
 	private String mail;
-	private List<Leave> leaves;
+	private int nbLeaves;
 
 	public Employee() {
 	}
 
 	public Employee(String login, String fname, String name, String address, String city, String zipCode, String team,
-			String role, String mail, List<Leave> nbLeaves) {
+			String role, String mail, int nbLeaves) {
 		this.login = login;
 		this.fname = fname;
 		this.name = name;
@@ -28,7 +26,7 @@ public class Employee {
 		this.team = team;
 		this.role = role;
 		this.mail = mail;
-		this.leaves = leaves;
+		this.nbLeaves = nbLeaves;
 	}
 
 	public String getLogin() {
@@ -103,18 +101,18 @@ public class Employee {
 		this.mail = mail;
 	}
 	
-	public List<Leave> getLeaves() {
-		return leaves;
+	public int getNbLeaves() {
+		return nbLeaves;
 	}
 
-	public void setLeaves(List<Leave> leaves) {
-		this.leaves = leaves;
+	public void setNbLeaves(int nbLeaves) {
+		this.nbLeaves = nbLeaves;
 	}
 
 	@Override
 	public String toString() {
 		return "Employee [login=" + login + ", fname=" + fname + ", name=" + name + ", address=" + address + ", city="
 				+ city + ", zipCode=" + zipCode + ", team=" + team + ", role=" + role + ", mail=" + mail + ", leaves="
-				+ leaves + "]";
+				+ nbLeaves + "]";
 	}
 }

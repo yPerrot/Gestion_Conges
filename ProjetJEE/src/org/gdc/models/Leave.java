@@ -3,7 +3,7 @@ package org.gdc.models;
 import java.util.Date;
 
 public class Leave {
-	private Employee employee;
+	private String login;
 	private Date beginDate;
 	private Date endDate;
 	private int duration;
@@ -16,9 +16,9 @@ public class Leave {
 	public Leave() {
 	}
 
-	public Leave(Employee employee, Date beginDate, Date endDate, int duration, String reason, String type,
+	public Leave(String login, Date beginDate, Date endDate, int duration, String reason, String type,
 			String state, Date validDate, String wording) {
-		this.employee = employee;
+		this.login = login;
 		this.beginDate = beginDate;
 		this.endDate = endDate;
 		this.duration = duration;
@@ -29,12 +29,12 @@ public class Leave {
 		this.wording = wording;
 	}
 
-	public Employee getEmployee() {
-		return employee;
+	public String getLogin() {
+		return login;
 	}
 
-	public void setEmployee(Employee employee) {
-		this.employee = employee;
+	public void setLogin(String login) {
+		this.login = login;
 	}
 
 	public Date getBeginDate() {
@@ -103,7 +103,7 @@ public class Leave {
 
 	@Override
 	public String toString() {
-		return "Leave [employee=" + employee + ", beginDate=" + beginDate + ", endDate=" + endDate + ", duration="
+		return "Leave [login=" + login + ", beginDate=" + beginDate + ", endDate=" + endDate + ", duration="
 				+ duration + ", reason=" + reason + ", type=" + type + ", state=" + state + ", validDate=" + validDate
 				+ ", wording=" + wording + "]";
 	}

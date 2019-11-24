@@ -10,7 +10,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.gdc.models.Employee;
 import org.gdc.models.Leave;
+import org.gdc.repositories.EmployeeRepo;
+import org.gdc.repositories.EmployeeRepoImpl;
 import org.gdc.repositories.LeaveRepo;
 import org.gdc.repositories.LeaveRepoImpl;
 
@@ -22,6 +25,7 @@ public class LeaveController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	private LeaveRepo leaveRepo = new LeaveRepoImpl();
+	private EmployeeRepo employeeRepo = new EmployeeRepoImpl();
 
 	/**
 	 * @see HttpServlet#HttpServlet()
@@ -36,13 +40,14 @@ public class LeaveController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
-		if(session == null) {
+		if(session.getAttribute("username") == null) {
 			response.sendRedirect(request.getContextPath() + "/AuthController");
 		} else {
 			System.out.println("username " + (String) session.getAttribute("username"));
-			List<Leave> listLeaves = leaveRepo.getLeaves((String) session.getAttribute("username"));
-			request.setAttribute( "listLeaves", listLeaves);
-			System.out.println("LiST" + listLeaves);
+			Employee emp = employeeRepo.getEmployee((String) session.getAttribute("username"));
+			List<Leave> listLeaves = leaveRepo.getLeaves(emp);
+			request.setAttribute("emp", emp);
+			request.setAttribute("listLeaves", listLeaves);
 			this.getServletContext().getRequestDispatcher("/User.jsp").forward( request, response );
 		}
 	}
