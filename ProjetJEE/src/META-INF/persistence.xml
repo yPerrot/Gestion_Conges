@@ -6,17 +6,9 @@
 	<persistence-unit name="ProjetJEE"
 		transaction-type="RESOURCE_LOCAL">
 		<provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
-		<class>org.gdc.models.Authentification</class>
-		<class>org.gdc.models.Conge</class>
-		<class>org.gdc.models.CongePK</class>
-		<class>org.gdc.models.Employe</class>
-		<class>org.gdc.models.Ref_Equipe</class>
-		<class>org.gdc.models.Ref_Etat_Conge</class>
-		<class>org.gdc.models.Ref_Fonction</class>
-		<class>org.gdc.models.Ref_Motif_Conge</class>
-		<class>org.gdc.models.Ref_Type_Conge</class>
-		<class>org.gdc.models.Rendez_vous</class>
-		<class>org.gdc.models.Rendez_vousPK</class>
+		<class>org.gdc.models.Leave</class>
+		<class>org.gdc.models.Employee</class>
+		<class>org.gdc.models.Appointement</class>
 		<exclude-unlisted-classes>true</exclude-unlisted-classes>
 
 		<properties>
