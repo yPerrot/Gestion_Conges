@@ -2,9 +2,14 @@
     pageEncoding="ISO-8859-1"%>
 <%
 Boolean errorMeet = request.getAttribute("BadAuthen")==null?null:(Boolean)request.getAttribute("BadAuthen");
-String pageTitle= "PUISQUE C'EST NOTRE PROJET !";
 %>
-<%@ include file="parts/header.jsp" %>  
+<!DOCTYPE html>
+<html>
+	<head>
+		<%@ include file="parts/includes.jsp" %>  
+		<title>Authentification</title>
+	</head>
+<body> 
 	
 	<nav class="navbar navbar-expand-lg navbar-light bg-light">
 	    <a class="navbar-brand">Notre projet</a>
@@ -18,12 +23,12 @@ String pageTitle= "PUISQUE C'EST NOTRE PROJET !";
 	                    <h5 class="card-title text-center">Authentification</h5>
 	                    <form class="form-signin" action="LoginController" method="POST">
 	                        <div class="form-label-group">
-	                            <label for="inputEmail">Email address</label>
-	                            <input type="email" id="inputEmail" name="inputEmail" class="form-control" placeholder="Email address" required autofocus>
+	                            <label for="inputEmail">Nom d'utilisateur</label>
+	                            <input type="text" id="inputNom" name="inputNom" class="form-control" placeholder="Nom d'utilisateur" required autofocus>
 	                        </div>
 	                        <div class="form-label-group">
-	                            <label for="inputPassword">Password</label>
-	                            <input type="password" id="inputPassword" name="inputPassword" class="form-control" placeholder="Password" required>
+	                            <label for="inputPassword">Mot de passe</label>
+	                            <input type="password" id="inputPassword" name="inputPassword" class="form-control" placeholder="Mot de passe" required>
 	                        </div>
 							<% if (errorMeet != null) {%>
 								<label style="color:red">Invalid username or password</label>
@@ -38,5 +43,4 @@ String pageTitle= "PUISQUE C'EST NOTRE PROJET !";
 	    </div>
 	</div>
 	
-</body>
-</html>
+<%@ include file="parts/footer.jsp" %>  
