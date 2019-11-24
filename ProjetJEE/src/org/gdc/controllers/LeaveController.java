@@ -12,7 +12,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.gdc.models.Conge;
-import org.gdc.repositories.LeaveRepo;
 import org.gdc.repositories.LeaveRepoImpl;
 
 /**
@@ -23,7 +22,7 @@ public class LeaveController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	@EJB
-	private LeaveRepo leaveRepo = new LeaveRepoImpl();
+	private LeaveRepoImpl leaveRepo = new LeaveRepoImpl();
 
 	/**
 	 * @see HttpServlet#HttpServlet()

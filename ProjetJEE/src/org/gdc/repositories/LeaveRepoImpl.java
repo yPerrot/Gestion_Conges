@@ -7,16 +7,13 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
-import javax.persistence.Query;
 
-import org.gdc.models.Authentification;
 import org.gdc.models.Conge;
 import org.gdc.models.Employe;
 
 @Stateless
-public class LeaveRepoImpl implements LeaveRepo {
+public class LeaveRepoImpl {
 
-	@Override
 	public List<Conge> getLeaves(String username) {
 		EntityManagerFactory entityManagerFactory = null;
 		EntityManager entityManager = null;
@@ -26,7 +23,8 @@ public class LeaveRepoImpl implements LeaveRepo {
 			entityManager = entityManagerFactory.createEntityManager();
 			
 //			Query query = entityManager.createQuery("select c from Conge c where c.login = :username") ;
-			List<Employe> a = entityManager.createNamedQuery("Employe.findAll").getResultList();
+//			List<Employe> a = entityManager.createNamedQuery("Employe.findAll").getResultList();
+			List<Employe> a = entityManager.createQuery("select c.login from Employe c").getResultList();
 //			query.setParameter("username", username);
 			System.out.println("a" + a);
 
@@ -37,6 +35,7 @@ public class LeaveRepoImpl implements LeaveRepo {
 			if ( entityManager != null ) entityManager.close();
 			if ( entityManagerFactory != null ) entityManagerFactory.close();
 		}
+
 /*
 		Connection conn = null;
 		Statement stmt = null;

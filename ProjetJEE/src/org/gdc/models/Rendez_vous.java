@@ -3,19 +3,12 @@ package org.gdc.models;
 import java.io.Serializable;
 import javax.persistence.*;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
 
 /**
  * The persistent class for the Rendez_vous database table.
  * 
  */
 @Entity
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
 @NamedQuery(name="Rendez_vous.findAll", query="SELECT r FROM Rendez_vous r")
 public class Rendez_vous implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -27,4 +20,24 @@ public class Rendez_vous implements Serializable {
 	@ManyToOne
 	@JoinColumn(name="login")
 	private Employe employe;
+
+	public Rendez_vous() {
+	}
+
+	public Rendez_vousPK getId() {
+		return this.id;
+	}
+
+	public void setId(Rendez_vousPK id) {
+		this.id = id;
+	}
+
+	public Employe getEmploye() {
+		return this.employe;
+	}
+
+	public void setEmploye(Employe employe) {
+		this.employe = employe;
+	}
+
 }
