@@ -28,11 +28,7 @@ request.setAttribute("nbCongesRestant", 5);
 		<%@ include file="parts/navbar.jsp" %>  
 	
 <!-- Debut Tests PopUp  -->
-	
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-  Launch demo modal
-</button>
-		
+
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -51,7 +47,7 @@ request.setAttribute("nbCongesRestant", 5);
       	<div class="row text-right"> 
       		<div class="col tex-left">     			
       			<button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
-        		<button type="button" class="btn btn-primary">Supprimer</button>
+        		<button type="button" class="btn btn-primary" onclick="myFunction">Supprimer</button>
        		</div>
       	</div>
       </div>
@@ -147,7 +143,7 @@ request.setAttribute("nbCongesRestant", 5);
 		      <td>Perso</td>
 		      <td class="text-center">
 		      	<button class="btn btn-secondary btn-sm" type="button" id="modifie-site">Modifier</button>
-               	<button class="btn btn-secondary btn-sm" type="button" id="delete-site">Supprimer</button>
+               	<button class="btn btn-secondary btn-sm" type="button" id="delete-site" data-toggle="modal" data-target="#exampleModal">Supprimer</button>
 		      </td>
 		      <td class="text-center"><button type="button" class="btn btn-outline-dark">...</button></td>
 		    </tr>
@@ -178,6 +174,16 @@ request.setAttribute("nbCongesRestant", 5);
 		
 		<!-- Fin container -->
 		</div>	
+		
+		<script>
+			function suppressionConge() {
+				
+			}
+			
+			function openPopUpSuppression() {
+				
+			}
+		</script>
 		
 	</body>
 </html>
