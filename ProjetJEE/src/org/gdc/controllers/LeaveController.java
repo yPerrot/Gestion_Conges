@@ -46,10 +46,19 @@ public class LeaveController extends HttpServlet {
 		if(session.getAttribute("username") == null) {
 			response.sendRedirect(request.getContextPath() + "/AuthController");
 		} else {
-			if(request.getParameter("delete") != null) {
-				System.out.println("delete pressed" + request.getParameter("id"));
-			}
 			Employee emp = employeeRepo.getEmployee((String) session.getAttribute("username"));
+			
+			if(request.getParameter("rowToDelete") != null) {
+				Date beginDate = null;
+				try {
+					beginDate = new SimpleDateFormat("yyyy-MM-dd").parse(request.getParameter("rowToDelete"));
+				} catch (ParseException e) {
+					e.printStackTrace();
+				}
+				Leave leaveToDelete = leaveRepo.getLeave(emp.getLogin(), beginDate);
+				leaveRepo.deleteLeave(leaveToDelete);
+			}
+			
 			List<Leave> listLeaves = leaveRepo.getLeaves(emp);
 			request.setAttribute("emp", emp);
 			request.setAttribute("listLeaves", listLeaves);
@@ -61,6 +70,7 @@ public class LeaveController extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		//CREATE
 		Date beginDate = null, endDate = null;
 		try {
 			beginDate = new SimpleDateFormat("yyyy-MM-dd").parse(request.getParameter("bday"));

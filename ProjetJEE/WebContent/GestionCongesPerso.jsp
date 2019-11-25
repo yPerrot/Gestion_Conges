@@ -20,6 +20,12 @@
 	$('#myModal').on('shown.bs.modal', function() {
 		$('#myInput').trigger('focus')
 	})
+	$(document).ready(function() {
+		$("#delete-site").click(function() {
+			var row = $(this).data('id');
+			$(".deleteButton").attr("href", "LeaveController?rowToDelete="+row);
+		});
+	});
 </script>
 </head>
 <body>
@@ -51,7 +57,7 @@
 						<div class="col text-right">
 						
 							<button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
-							<button type="button" class="btn btn-primary">Valider</button>
+							<a class="deleteButton"><button type="button" class="btn btn-primary">Supprimer</button></a>
 						</div>
 					</div>
 				</div>
@@ -141,15 +147,14 @@
 							<td><c:out value="${item.getEndDate()}" /></td>
 							<td><c:out value="${item.getReason()}" /></td>
 							<td><c:out value="${item.getType()}" /></td>
-							<!--<td class="text-center"><input type="button"
+							<!-- <td class="text-center"><input type="button"
 								id="modifie-site" value="Modifier" />
-								<a href=LeaveController?id='"+${item}+"'>
-									<input class="btn btn-outline-danger my-2 my-sm-0" type="button" id="delete-site" name="delete" value="Supprimer" />
-								</a>
+								<a href=LeaveController?id='"+${item}+"'></a>
+								<input class="openDeleteModal btn btn-outline-danger my-2 my-sm-0" type="button" id="delete-site" name="delete" value="Supprimer" />
 							</td>-->
 							<td class="text-center">
 								<input class="btn btn-outline-dark" type="button" id="modifie-site" value="Modifier" /> 
-								<input class="btn btn-outline-dark" data-toggle="modal" data-target="#SuppressionModal"
+								<input class="btn btn-outline-dark" data-id="${item.getBeginDate()}" data-toggle="modal" data-target="#SuppressionModal"
 									type="button" id="delete-site" value="Supprimer" />
 								<input class="btn btn-outline-dark btn-sm" data-toggle="modal" data-target="#VisualisationConge"
 									type="button" id="view_info" value="..." />
@@ -203,16 +208,10 @@
 
 		<!-- Fin container -->
 		</div>	
-		
-		<script>
-			function suppressionConge() {
-				
-			}
-			
-			function openPopUpSuppression() {
-				
-			}
-		</script>
 		<%@ include file="parts/footer.jsp"%>
-	</body>
+
+	<script>
+
+	</script>
+</body>
 </html>
