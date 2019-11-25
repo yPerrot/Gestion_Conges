@@ -27,15 +27,15 @@ request.setAttribute("name", name);
 
 		<h1>Nouvelle demande de conge : </h1>
 		<!-- <p>Date: <input type="text" id="datepicker"></p> -->
-		<form>
+		<form class="form-signin" action="LeaveController" method="POST">
 
 			<div class="form-group">
-				<label>Debut de conge :</label> <input type="date" name="bday"
+				<label>Debut de congé :</label> <input type="date" name="bday"
 					max="3000-12-31" min="1000-01-01" class="form-control">
 			</div>
 
 			<div class="form-group">
-				<label>Fin de conge :</label> <input type="date" name="bday"
+				<label>Fin de congé :</label> <input type="date" name="eday"
 					min="1000-01-01" max="3000-12-31" class="form-control">
 			</div>
 
@@ -47,20 +47,31 @@ request.setAttribute("name", name);
 
 			<!-- Informations a recuperer dans la BDD -->
 			<div class="form-group">
-				<label>Raison conge :</label> <select class="form-control">
-					<option selected disabled>Choisisez une raison</option>
-					<option value="RTT">RTT</option>
-					<option value="Conges_Annuels">Conges annuels</option>
-					<option value="Enfant_Malade">Enfant malade</option>
-					<option value="Famille">Famille</option>
+				<label>Motif</label> <select name="motif" class="form-control">
+					<option selected disabled>Choisir un motif</option>
+					<option value="Maladie">Maladie</option>
+					<option value="Enfants malades">Enfants malades</option>
+					<option value="Raisons personnelles">Raisons personnelles</option>
 				</select>
 			</div>
 
-			<button class="btn btn-outline-success my-2 my-sm-0"
-				onclick="location.href='User.jsp'" type="submit">Valider</button>
-			<button class="btn btn-outline-danger my-2 my-sm-0"
-				onclick="location.href='User.jsp'" type="submit">Annuler</button>
+			<div class="form-group">
+				<label>Type</label> <select name="type" class="form-control">
+					<option selected disabled>Choisir un type</option>
+					<option value="RTT">RTT</option>
+					<option value="CP">Congés Payés</option>
+					<option value="Formation">Formation</option>
+				</select>
+			</div>
 
+			<div class="form-group">
+				<label>Commentaire</label>
+				<textarea name="comment"></textarea>
+			</div>
+
+			<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Valider</button>
+			<button class="btn btn-outline-danger my-2 my-sm-0"
+				onclick="location.href='GestionCongesPerso.jsp'">Annuler</button>
 		</form>
 
 	</div>

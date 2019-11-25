@@ -7,4 +7,5 @@ import org.gdc.models.Leave;
 
 public interface LeaveRepo {
 	List<Leave> getLeaves(Employee employee);
+	void addLeave(Leave leave);
 }

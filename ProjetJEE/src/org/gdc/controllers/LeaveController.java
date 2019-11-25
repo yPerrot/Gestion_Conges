@@ -1,6 +1,9 @@
 package org.gdc.controllers;
 
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -43,7 +46,9 @@ public class LeaveController extends HttpServlet {
 		if(session.getAttribute("username") == null) {
 			response.sendRedirect(request.getContextPath() + "/AuthController");
 		} else {
-			System.out.println("username " + (String) session.getAttribute("username"));
+			if(request.getParameter("delete") != null) {
+				System.out.println("delete pressed" + request.getParameter("id"));
+			}
 			Employee emp = employeeRepo.getEmployee((String) session.getAttribute("username"));
 			List<Leave> listLeaves = leaveRepo.getLeaves(emp);
 			request.setAttribute("emp", emp);
@@ -56,6 +61,21 @@ public class LeaveController extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		Date beginDate = null, endDate = null;
+		try {
+			beginDate = new SimpleDateFormat("yyyy-MM-dd").parse(request.getParameter("bday"));
+			endDate = new SimpleDateFormat("yyyy-MM-dd").parse(request.getParameter("eday"));
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		String motif = request.getParameter("motif");
+		String type = request.getParameter("type");
+		String comment = request.getParameter("comment");
+
+		HttpSession session = request.getSession();
+		Employee emp = employeeRepo.getEmployee((String) session.getAttribute("username"));
+		Leave leave = new Leave(emp.getLogin(), beginDate, endDate, 0, motif, type, "En attente", null, comment);
+		leaveRepo.addLeave(leave);
 		doGet(request, response);
 	}
 

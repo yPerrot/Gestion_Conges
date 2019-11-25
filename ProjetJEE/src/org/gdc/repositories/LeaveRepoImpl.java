@@ -37,4 +37,31 @@ public class LeaveRepoImpl implements LeaveRepo {
 		}
 		return listLeaves;
 	}
+
+	@Override
+	public void addLeave(Leave leave) {
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		try {
+			conn = DBManager.getInstance().getConnection();
+			if (conn != null) {
+				stmt = conn.prepareStatement("INSERT INTO Conge(login, date_debut, date_fin, duree, motif, type_conges, etat) VALUES(?,?,?,?,?,?,?)");
+				stmt.setString(1, leave.getLogin());
+				stmt.setDate(2, new java.sql.Date(leave.getBeginDate().getTime()));
+				stmt.setDate(3, new java.sql.Date(leave.getEndDate().getTime()));
+				stmt.setInt(4, leave.getDuration());
+				stmt.setString(5, leave.getReason());
+				stmt.setString(6, leave.getType());
+				stmt.setString(7, leave.getState());
+				stmt.executeUpdate();
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			if (conn != null) {
+				DBManager.getInstance().cleanup(conn, stmt, rs);
+			}
+		}
+	}
 }

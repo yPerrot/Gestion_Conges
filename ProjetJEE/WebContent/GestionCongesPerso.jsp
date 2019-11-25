@@ -1,26 +1,9 @@
 <%@ include file="parts/load.jsp"%>
-<%@page import="java.util.ArrayList,org.gdc.models.Leave,java.util.Date"%>
-<%
-String name = (String)request.getAttribute("UserName");
-request.setAttribute("nbCongesRestant", 5);
-
-ArrayList listLeaves = new ArrayList<Leave>();
-listLeaves.add(new Leave("yperrot",new Date(),new Date(),10,"raison","Maladie","validé",new Date(),"wording"));
-//(String login, Date beginDate, Date endDate, int duration, String reason, String type, String state, Date validDate, String wording)
-request.setAttribute("listLeaves", listLeaves);
-
-ArrayList listLeavesApproved = new ArrayList<Leave>();
-listLeavesApproved.add(new Leave("yperrot",new Date(),new Date(),10,"raison","Maladie","validé",new Date(),"wording"));
-request.setAttribute("listLeavesApproved", listLeavesApproved);
-
-Leave selectedLeave = null;
-request.setAttribute("selectedLeave", selectedLeave);
-%>
 <!DOCTYPE html>
 <html>
 <head>
 <%@ include file="parts/includes.jsp"%>
-<title>Gestion des conges de ${emp.getFname()}</title>
+<title>Gestion des congés de ${emp.getFname()}</title>
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
 	integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
 	crossorigin="anonymous"></script>
@@ -119,11 +102,11 @@ request.setAttribute("selectedLeave", selectedLeave);
 					<tbody>
 						<tr>
 							<th class="col-md-2">RTT</th>
-							<td class="col-md-2 text-center">0</td>
+							<td class="col-md-2 text-center">10</td>
 						</tr>
 						<tr>
 							<th class="col-md-2">Conges payes</th>
-							<td class="col-md-2 text-center">2</td>
+							<td class="col-md-2 text-center">15</td>
 						</tr>
 				</table>
 			</div>
@@ -135,27 +118,35 @@ request.setAttribute("selectedLeave", selectedLeave);
 			</div>
 			<div class="col-2 align-self-center">
 				<button class="btn btn-secondary"
-					onclick="location.href='DemandeConge.jsp'">Nouveau conge</button>
+					onclick="location.href='DemandeConge.jsp'">Nouveau congé</button>
 			</div>
 		</div>
 		<table class="table table-bordered">
 			<thead class="thead-light">
 				<tr>
 					<th scope="col">#</th>
-					<th scope="col">Date de debut</th>
+					<th scope="col">Date de début</th>
 					<th scope="col">Date de fin</th>
+					<th scope="col">Motif</th>
 					<th scope="col">Type</th>
 					<th scope="col"></th>
 				</tr>
 			</thead>
 			<tbody>
 				<c:forEach items="${listLeaves}" var="item" varStatus="loop">
-					<c:if test="${item.getValidDate() != null}">
+					<c:if test="${item.getValidDate() == null}">
 						<tr>
 							<th scope="row">${loop.index + 1}</th>
 							<td><c:out value="${item.getBeginDate()}" /></td>
 							<td><c:out value="${item.getEndDate()}" /></td>
+							<td><c:out value="${item.getReason()}" /></td>
 							<td><c:out value="${item.getType()}" /></td>
+							<!--<td class="text-center"><input type="button"
+								id="modifie-site" value="Modifier" />
+								<a href=LeaveController?id='"+${item}+"'>
+									<input class="btn btn-outline-danger my-2 my-sm-0" type="button" id="delete-site" name="delete" value="Supprimer" />
+								</a>
+							</td>-->
 							<td class="text-center">
 								<input class="btn btn-outline-dark" type="button" id="modifie-site" value="Modifier" /> 
 								<input class="btn btn-outline-dark" data-toggle="modal" data-target="#SuppressionModal"
@@ -171,7 +162,7 @@ request.setAttribute("selectedLeave", selectedLeave);
 
 		<div class="row">
 			<div class="col">
-				<h1>Vos conges</h1>
+				<h1>Vos congés</h1>
 			</div>
 		</div>
 
@@ -180,20 +171,25 @@ request.setAttribute("selectedLeave", selectedLeave);
 			<thead class="thead-light">
 				<tr>
 					<th scope="col">#</th>
-					<th scope="col">Date de debut</th>
+					<th scope="col">Date de début</th>
 					<th scope="col">Date de fin</th>
+					<th scope="col">Motif</th>
 					<th scope="col">Type</th>
 					<th scope="col"></th>
 				</tr>
 			</thead>
 			<tbody>
-				<c:forEach items="${listLeavesApproved}" var="item" varStatus="loop">
+				<c:forEach items="${listLeaves}" var="item" varStatus="loop">
 					<c:if test="${item.getValidDate() != null}">
 						<tr>
 							<th scope="row">${loop.index + 1}</th>
 							<td><c:out value="${item.getBeginDate()}" /></td>
 							<td><c:out value="${item.getEndDate()}" /></td>
+							<td><c:out value="${item.getReason()}" /></td>
 							<td><c:out value="${item.getType()}" /></td>
+							<!-- <td class="text-center"><input type="button"
+								id="modifie-site" value="Modifier" /> <input type="button"
+								id="delete-site" value="Supprimer" /></td> -->	
 							<td class="text-center">
 								<input class="btn btn-outline-dark btn-sm" type="button" id="view_info" 
 								 onclick="${System.out.println(item.getType());selectedLeave=item}" data-toggle="modal" data-target="#VisualisationConge" value="..." />
@@ -217,6 +213,6 @@ request.setAttribute("selectedLeave", selectedLeave);
 				
 			}
 		</script>
-		
+		<%@ include file="parts/footer.jsp"%>
 	</body>
 </html>
