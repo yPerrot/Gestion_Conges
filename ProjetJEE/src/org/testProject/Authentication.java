@@ -82,11 +82,11 @@ public class Authentication extends HttpServlet {
 
 		System.out.println("POST");
 		
-		String userMail = (String) req.getParameter("inputEmail");
+		String userMail = (String) req.getParameter("inputUser");
 		String userPassword = (String) req.getParameter("inputPassword");
 		
 		if (userMail.equals("a@a.a") && userPassword.equals("a")) {
-			// Si UserName MDP valide, créer un session et récupère les infos sur la BDD
+			// Si UserName MDP valide, crï¿½er un session et rï¿½cupï¿½re les infos sur la BDD
 			
 			//TODO : Uncomment
 			req.getSession();

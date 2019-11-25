@@ -1,45 +1,43 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
-    
+<%@ include file="parts/load.jsp"%>
 <%
 String name = (String)request.getAttribute("UserName");
 request.setAttribute("name", name);
 %>
-    
+
 <!DOCTYPE html>
 <html>
 <head>
-	<%@ include file="parts/includes.jsp" %> 
-	<title>Statistiques</title>
-	<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+<%@ include file="parts/includes.jsp"%>
+<title>Statistiques</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
 </head>
 <body>
-	<%@ include file="parts/navbar.jsp" %> 
-	
+	<%@ include file="parts/navbar.jsp"%>
+
 	<div class="container">
-	
+
 		<div class="row m-3">
 			<div class="col-auto">
-	  			<h2>Statistique : </h2>
+				<h2>Statistique :</h2>
 			</div>
 			<div class="col">
-				<select  class="custom-select">
+				<select class="custom-select">
 					<option selected value="1">One</option>
 					<option value="2">Two</option>
 					<option value="3">Three</option>
 				</select>
 			</div>
 		</div>
-		
+
 		<div class="row">
 			<div class="col">
-			  <canvas id="myChart"></canvas>
+				<canvas id="myChart"></canvas>
 			</div>
-		</div>	
-		
-		
-		
-			<script>
+		</div>
+
+
+
+		<script>
 			var ctx = document.getElementById('myChart').getContext('2d');
 			var myChart = new Chart(ctx, {
 			    type: 'bar',
@@ -80,5 +78,7 @@ request.setAttribute("name", name);
 			</script>
 
 	</div>
-		
-<%@ include file="parts/footer.jsp" %> 
+
+	<%@ include file="parts/footer.jsp"%>
+</body>
+</html>

@@ -8,7 +8,7 @@
     </div>
 
     <div class="my-2 my-lg-0">
-        <span >${name}</span>
-        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Log out</button >
+        <span > ${emp.getFname()} ${emp.getName()} </span>
+        <button class="btn btn-outline-success my-2 my-sm-0" onclick="location.href='Authentification.jsp'" type="submit">Log out</button >
     </div>
 </nav>
