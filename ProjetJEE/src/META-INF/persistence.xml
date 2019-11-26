@@ -6,9 +6,6 @@
 	<persistence-unit name="ProjetJEE"
 		transaction-type="RESOURCE_LOCAL">
 		<provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
-		<class>org.gdc.models.Leave</class>
-		<class>org.gdc.models.Employee</class>
-		<class>org.gdc.models.Appointement</class>
 		<exclude-unlisted-classes>true</exclude-unlisted-classes>
 
 		<properties>

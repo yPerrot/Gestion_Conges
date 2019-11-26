@@ -80,15 +80,9 @@
 				<div class="modal-body">
 					<div class="row">
 						<div class="col">
-							<%-- <p>Voulez-vous validation la suppression du congé : <c:out value="${selectedLeave==null;}"/></p> --%>
-							<p><c:out value="${selectedLeave==null}" /></p>
-							<p>${selectedLeave==null}</p>
-						</div>
-					</div>
-					<div class="row">
-						<div class="col text-right">
-							<button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
-							<button type="button" class="btn btn-primary">Valider</button>
+							<p>Date de debut : ${listLeavesApproved.get(test).getBeginDate()}</p>
+							<p>Date de fin : ${listLeavesApproved.get(test).getEndDate()}</p>
+							<p>Duree du conge : ${listLeavesApproved.get(test).getEndDate()}</p>
 						</div>
 					</div>
 				</div>
