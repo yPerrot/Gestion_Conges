@@ -15,6 +15,9 @@ request.setAttribute("listLeavesApproved", listLeavesApproved);
 
 Leave selectedLeave = null;
 request.setAttribute("selectedLeave", selectedLeave);
+
+String test = null;
+request.setAttribute("test", test);
 %>
 <!DOCTYPE html>
 <html>
@@ -91,15 +94,9 @@ request.setAttribute("selectedLeave", selectedLeave);
 				<div class="modal-body">
 					<div class="row">
 						<div class="col">
-							<%-- <p>Voulez-vous validation la suppression du congé : <c:out value="${selectedLeave==null;}"/></p> --%>
-							<p><c:out value="${selectedLeave==null}" /></p>
-							<p>${selectedLeave==null}</p>
-						</div>
-					</div>
-					<div class="row">
-						<div class="col text-right">
-							<button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
-							<button type="button" class="btn btn-primary">Valider</button>
+							<p>Date de debut : ${listLeavesApproved.get(test).getBeginDate()}</p>
+							<p>Date de fin : ${listLeavesApproved.get(test).getEndDate()}</p>
+							<p>Duree du conge : ${listLeavesApproved.get(test).getEndDate()}</p>
 						</div>
 					</div>
 				</div>
@@ -160,8 +157,10 @@ request.setAttribute("selectedLeave", selectedLeave);
 								<input class="btn btn-outline-dark" type="button" id="modifie-site" value="Modifier" /> 
 								<input class="btn btn-outline-dark" data-toggle="modal" data-target="#SuppressionModal"
 									type="button" id="delete-site" value="Supprimer" />
-								<input class="btn btn-outline-dark btn-sm" data-toggle="modal" data-target="#VisualisationConge"
-									type="button" id="view_info" value="..." />
+								<!-- <input class="btn btn-outline-dark btn-sm" data-toggle="modal" data-target="#VisualisationConge"
+									type="button" id="view_info" value="..." /> -->
+								<button class="btn btn-outline-dark btn-sm" data-toggle="modal" data-target="#VisualisationConge"
+									 id="view_info" value="${loop.index + 1}">...</button>
 							</td>
 						</tr>
 					</c:if>
@@ -195,8 +194,9 @@ request.setAttribute("selectedLeave", selectedLeave);
 							<td><c:out value="${item.getEndDate()}" /></td>
 							<td><c:out value="${item.getType()}" /></td>
 							<td class="text-center">
-								<input class="btn btn-outline-dark btn-sm" type="button" id="view_info" 
-								 onclick="${System.out.println(item.getType());selectedLeave=item}" data-toggle="modal" data-target="#VisualisationConge" value="..." />
+								<%-- <input class="btn btn-outline-dark btn-sm" type="button" id="view_info" 
+								 onclick="openPopUpSuppression(${item})" data-toggle="modal" data-target="#VisualisationConge" value="..." /> --%>
+								<button class="btn btn-outline-dark btn-sm" id="view_info" >...</button>
 							</td>
 						</tr>
 					</c:if>
@@ -209,14 +209,16 @@ request.setAttribute("selectedLeave", selectedLeave);
 		</div>	
 		
 		<script>
-			function suppressionConge() {
-				
-			}
-			
-			function openPopUpSuppression() {
-				
-			}
+
+		$(document).ready(function(){
+		    $(".btn").click(function(id){
+		    	${test = id}
+		        $("#VisualisationConge").modal("show");
+		    });
+		});
+
 		</script>
+		
 		
 	</body>
 </html>
