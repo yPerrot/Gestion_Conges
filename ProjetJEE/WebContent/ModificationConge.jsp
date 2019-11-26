@@ -2,7 +2,7 @@
 <%@page import="org.gdc.models.Leave,java.util.Date,java.util.ArrayList,java.text.SimpleDateFormat"%>
 <%
 Leave conge = new Leave("yperrot",new Date(),new Date(),10,"raison","Maladie","validé",new Date(),"wording");
-request.setAttribute("mail", conge);
+request.setAttribute("conge", conge);
 %>
 
 <!DOCTYPE html>
@@ -21,25 +21,17 @@ request.setAttribute("mail", conge);
 
 	<div class="container">
 
-		<!-- <p>Date: <input type="text" id="datepicker"></p>
-			<script>
-				$( function() {
-					$( "#datepicker" ).datepicker();
-				} );
-			</script>
-		-->
-		
 		<h1>Modification de congé : </h1>
 		<form>
 
 			<div class="form-group">
 				<label>Date de debut de congé :</label> <input type="date" name="bday"
-					max="3000-12-31" min="1000-01-01" class="form-control" value="${beginDate}">
+					max="3000-12-31" min="1000-01-01" class="form-control" value="${conge.getBeginDate()}">
 			</div>
 
 			<div class="form-group">
 				<label>Date de fin de congé :</label> <input type="date" name="bday"
-					min="1000-01-01" max="3000-12-31" class="form-control" value="${endDate}">
+					min="1000-01-01" max="3000-12-31" class="form-control" value="${conge.getEndDate}">
 			</div>
 
 			<!-- 	
@@ -67,15 +59,14 @@ request.setAttribute("mail", conge);
 			</div>
 
 			<button class="btn btn-outline-success my-2 my-sm-0"
-				onclick="location.href='User.jsp'" type="submit">Valider</button>
+				onclick="location.href='LeaveController?page=GestionCongesPerso'" type="submit">Valider</button>
 			<button class="btn btn-outline-danger my-2 my-sm-0"
-				onclick="location.href='User.jsp'" type="submit">Annuler</button>
+				onclick="location.href='LeaveController?page=GestionCongesPerso'">Annuler</button>
 
 		</form>
 
 	</div>
 
 	<%@ include file="parts/footer.jsp"%>
-
 </body>
 </html>

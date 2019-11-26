@@ -13,13 +13,13 @@
 	<div class="container">
 		<span>${errors['remainingBalance']}</span>
 
-		<h1>Nouvelle demande de congé :</h1>
+		<h1>Nouvelle fiche employé :</h1>
+		
 		<form class="form-signin" action="LeaveController" method="POST">
-
 
 			<div class="form-group">
 				<label for="name">Prénom :</label>
-				<input type="text" class="form-control" id="name" placeholder="Prénom" >
+				<input type="text" class="form-control" id="name" placeholder="Prénom" required>
 			</div>
 			
 			<div class="form-group">
@@ -29,30 +29,36 @@
 			
 			<div class="form-group">
 				<label for="familyName">Nom de famille :</label>
-				<input type="text" class="form-control" id="familyName" placeholder="Nom de famille">
+				<input type="text" class="form-control" id="familyName" placeholder="Nom de famille" required>
 			</div>
 
 			<div class="form-group">
 				<label for="address">Adresse :</label>
-				<input type="text" class="form-control" id="address" placeholder="Adresse">
+				<input type="text" class="form-control" id="address" placeholder="Adresse" required>
 			</div>
 
 			<div class="form-group">
+				<label for="city">Ville :</label>
+				<input type="text" class="form-control" id="city" placeholder="Ville" required>
+			</div>
+			
+			<div class="form-group">
 				<label for="zipCode">Code postal :</label>
-				<input type="number" class="form-control" id="zipCode" min="0" max="99999">
+				<input type="text" class="form-control" id="zipCode" placeholder="29800" required>
 			</div>
 			
 			<div class="form-group">
 				<label for="mail">Adresse email :</label>
-				<input type="email" class="form-control" id="mail" placeholder="adresse@mail.com">
+				<input type="email" class="form-control" id="mail" placeholder="adresse@mail.com" required>
 			</div>
 			
 			<div class="form-group">
 				<label>Equipe :</label> 
-				<select name="team" class="form-control">
+				<select name="team" class="form-control" >
 					<option selected disabled>Choisir une équipe</option>
-					<option value="Chef d'equipe">Chef d'equipe</option>
-					<option value="Membre d'equipe">Membre d'equipe</option>
+					<option value="Comptabilite">Comptabilite</option>
+					<option value="Informatique">Informatique</option>
+					<option value="RH">RH</option>
 				</select>
 			</div>
 
@@ -60,9 +66,8 @@
 				<label>Poste :</label> 
 				<select name="role" class="form-control">
 					<option selected disabled>Choisir un poste</option>
-					<option value="Comptabilite">Comptabilite</option>
-					<option value="Informatique">Informatique</option>
-					<option value="RH">RH</option>
+					<option value="Chef d'equipe">Chef d'equipe</option>
+					<option value="Membre d'equipe">Membre d'equipe</option>
 				</select>
 			</div>
 			
@@ -71,7 +76,8 @@
 				<input type="number" class="form-control" id="nbLeaves" min="0" max="50" value="25">
 			</div>
 			
-			<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Valider</button>
+			<button class="btn btn-outline-success my-2 my-sm-0"
+				onclick="location.href='LeaveController?page=GestionCongesPerso'" type="submit">Valider</button>
 			<button class="btn btn-outline-danger my-2 my-sm-0"
 				onclick="location.href='LeaveController?page=GestionCongesEmployes'">Annuler</button>
 		</form>
