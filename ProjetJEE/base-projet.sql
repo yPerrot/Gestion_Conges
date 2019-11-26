@@ -64,7 +64,7 @@ CREATE TABLE Employe (
 	equipe varchar(30) NOT NULL,
 	fonction varchar(30) NOT NULL,
 	mail varchar(30) NOT NULL,
-	solde_congés INT,
+	solde_conges INT,
 	PRIMARY KEY (login),
 	FOREIGN KEY (equipe)
 		REFERENCES Ref_Equipes (nom_equipe),

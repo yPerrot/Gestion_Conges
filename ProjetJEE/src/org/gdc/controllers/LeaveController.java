@@ -29,7 +29,8 @@ import org.gdc.repositories.LeaveRepoImpl;
 @WebServlet("/LeaveController")
 public class LeaveController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-
+	private Map<String, String> errors = new HashMap<String, String>();
+	
 	private LeaveRepo leaveRepo = new LeaveRepoImpl();
 	private EmployeeRepo employeeRepo = new EmployeeRepoImpl();
 
@@ -50,30 +51,75 @@ public class LeaveController extends HttpServlet {
 			response.sendRedirect(request.getContextPath() + "/AuthController");
 		} else {
 			Employee emp = employeeRepo.getEmployee((String) session.getAttribute("username"));
+			// errors = 
 			List<Leave> listLeaves = leaveRepo.getLeaves(emp);
+			List<Leave> listLeavesToValid = leaveRepo.getLeavesToValid(emp);
 			request.setAttribute("emp", emp);
 			request.setAttribute("listLeaves", listLeaves);
+			request.setAttribute("listLeavesToValid", listLeavesToValid);
 
-			//DISPATCHER
+			// DISPATCHER
 			if(request.getParameter("page") != null) {
 				this.getServletContext().getRequestDispatcher("/" + request.getParameter("page") + ".jsp").forward( request, response );
-			} else {
+			}
 
-				//delete leave
-				if(request.getParameter("rowToDelete") != null) {
+			// ACTION
+			else if (request.getParameter("action") != null) {
+				switch (request.getParameter("action")) {
+				case "delete":
 					Date beginDate = null;
 					try {
-						beginDate = new SimpleDateFormat("yyyy-MM-dd").parse(request.getParameter("rowToDelete"));
+						beginDate = new SimpleDateFormat("yyyy-MM-dd").parse(request.getParameter("delBeginDate"));
 					} catch (ParseException e) {
 						e.printStackTrace();
 					}
 					Leave leaveToDelete = leaveRepo.getLeave(emp.getLogin(), beginDate);
 					leaveRepo.deleteLeave(leaveToDelete);
-					response.sendRedirect(request.getContextPath() + "/LeaveController");
-				} else {
-					this.getServletContext().getRequestDispatcher("/GestionCongesPerso.jsp").forward( request, response );
+					break;
+					
+				case "accept":
+					Date accBeginDate = null;
+					try {
+						accBeginDate = new SimpleDateFormat("yyyy-MM-dd").parse(request.getParameter("upBday"));
+					} catch (ParseException e) {
+						e.printStackTrace();
+					}
+					Leave accLeave = leaveRepo.getLeave(request.getParameter("upLogin"), accBeginDate);
+					accLeave.setState("Valide");
+					accLeave.setValidDate(new Date());
+					accLeave.setWording(request.getParameter("upWording"));
+					leaveRepo.updateLeave(accLeave);
+					break;
 
+				case "decline":
+					Date decBeginDate = null;
+					try {
+						decBeginDate = new SimpleDateFormat("yyyy-MM-dd").parse(request.getParameter("upBday"));
+					} catch (ParseException e) {
+						e.printStackTrace();
+					}
+					Leave decLeave = leaveRepo.getLeave(request.getParameter("upLogin"), decBeginDate);
+					decLeave.setState("Refuse");
+					decLeave.setValidDate(new Date());
+					decLeave.setWording(request.getParameter("upWording"));
+					
+					//check wording field filled
+					try {
+						if(request.getParameter("upWording").isEmpty()) {
+							throw new Exception( "Le Commentaire est obligatoire en cas de refus de la demande" );
+						} else {
+							leaveRepo.updateLeave(decLeave);
+						}
+					} catch ( Exception e ) {
+						errors.put("wording", e.getMessage());
+						request.setAttribute("errors", errors);
+						this.getServletContext().getRequestDispatcher("/LeaveController?page=GestionCongesEmployes").forward( request, response );
+					}
+					break;
 				}
+				response.sendRedirect(request.getContextPath() + "/LeaveController");
+			} else {
+				this.getServletContext().getRequestDispatcher("/GestionCongesPerso.jsp").forward( request, response );
 			}
 		}
 	}
@@ -84,36 +130,42 @@ public class LeaveController extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
 		Employee emp = employeeRepo.getEmployee((String) session.getAttribute("username"));
-		Map<String, String> errors = new HashMap<String, String>();
 
-		//create leave
-		Date beginDate = null, endDate = null;
-		int duration = 0;
-		try {
-			beginDate = new SimpleDateFormat("yyyy-MM-dd").parse(request.getParameter("bday"));
-			endDate = new SimpleDateFormat("yyyy-MM-dd").parse(request.getParameter("eday"));
-			long diff = endDate.getTime() - beginDate.getTime();
-			duration = (int) TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS);
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
-		String motif = request.getParameter("motif");
-		String type = request.getParameter("type");
-
-		try {
-			if(emp.getNbLeaves() - duration < 0) {
-				throw new Exception( "Votre solde actuel ne vous permet pas de poser de nouveaux congés" );
-			} else {
-				Leave leave = new Leave(emp.getLogin(), beginDate, endDate, duration, motif, type, "En attente", null, null);
-				leaveRepo.addLeave(leave);
-				employeeRepo.actualizeRemainingBalance(emp, emp.getNbLeaves() - duration);
+		// ACTION
+		if (request.getParameter("action") != null) {
+			switch (request.getParameter("action")) {
+			case "create":
+				Date beginDate = null, endDate = null;
+				int duration = 0;
+				try {
+					beginDate = new SimpleDateFormat("yyyy-MM-dd").parse(request.getParameter("bday"));
+					endDate = new SimpleDateFormat("yyyy-MM-dd").parse(request.getParameter("eday"));
+					long diff = endDate.getTime() - beginDate.getTime();
+					duration = (int) TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS);
+				} catch (ParseException e) {
+					e.printStackTrace();
+				}
+				String motif = request.getParameter("motif");
+				String type = request.getParameter("type");
+				
+				//check remaining leave balance
+				try {
+					if(emp.getNbLeaves() - duration < 0) {
+						throw new Exception( "Votre solde actuel ne vous permet pas de poser de nouveaux congés" );
+					} else {
+						Leave leave = new Leave(emp.getLogin(), beginDate, endDate, duration, motif, type, "En attente", null, null);
+						leaveRepo.addLeave(leave);
+						employeeRepo.actualizeRemainingBalance(emp, emp.getNbLeaves() - duration);
+					}
+				} catch ( Exception e ) {
+					errors.put("remainingBalance", e.getMessage());
+					request.setAttribute("errors", errors);
+					this.getServletContext().getRequestDispatcher("/LeaveController?page=DemandeConge").forward( request, response );
+				}
+				break;
 			}
-		} catch ( Exception e ) {
-			errors.put("remainingBalance", e.getMessage());
-			request.setAttribute("errors", errors);
-			this.getServletContext().getRequestDispatcher("/DemandeConge.jsp").forward( request, response );
 		}
+
 		doGet(request, response);
 	}
-
 }

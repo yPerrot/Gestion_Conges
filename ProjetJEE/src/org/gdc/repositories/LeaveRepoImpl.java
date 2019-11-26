@@ -115,4 +115,55 @@ public class LeaveRepoImpl implements LeaveRepo {
 		}
 	
 	}
+
+	@Override
+	public List<Leave> getLeavesToValid(Employee employee) {
+		List<Leave> listLeavesToValid = new ArrayList<Leave>();
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		try {
+			conn = DBManager.getInstance().getConnection();
+			if (conn != null) {
+				stmt = conn.prepareStatement("SELECT * FROM Conge WHERE login != ? AND etat = 'En attente'");
+				stmt.setString(1, employee.getLogin());
+				rs = stmt.executeQuery();
+				while (rs.next()) {
+					listLeavesToValid.add(new Leave(rs.getString("login"), rs.getDate("date_debut"), rs.getDate("date_fin"), rs.getInt("duree"), rs.getString("motif"), rs.getString("type_conges"), rs.getString("etat"), rs.getDate("date_validation"), rs.getString("commentaire")));
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			if (conn != null) {
+				DBManager.getInstance().cleanup(conn, stmt, rs);
+			}
+		}
+		return listLeavesToValid;
+	}
+
+	@Override
+	public void updateLeave(Leave leave) {
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		try {
+			conn = DBManager.getInstance().getConnection();
+			if (conn != null) {
+				stmt = conn.prepareStatement("UPDATE Conge SET etat = ?, date_validation = ?, commentaire = ? WHERE login = ? AND date_debut = ?");
+				stmt.setString(1, leave.getState());
+				stmt.setDate(2, new java.sql.Date(leave.getValidDate().getTime()));
+				stmt.setString(3, leave.getWording());
+				stmt.setString(4, leave.getLogin());
+				stmt.setDate(5, new java.sql.Date(leave.getBeginDate().getTime()));
+				stmt.executeUpdate();
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			if (conn != null) {
+				DBManager.getInstance().cleanup(conn, stmt, rs);
+			}
+		}
+	}
 }

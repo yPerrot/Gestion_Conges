@@ -11,4 +11,6 @@ public interface LeaveRepo {
 	void addLeave(Leave leave);
 	Leave getLeave(String login, Date beginDate);
 	void deleteLeave(Leave leaveToDelete);
+	List<Leave> getLeavesToValid(Employee employee);
+	void updateLeave(Leave leave);
 }
