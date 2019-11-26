@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import org.gdc.models.Employee;
+import org.gdc.models.Leave;
 import org.testProject.DBManager;
 
 
@@ -37,5 +38,26 @@ public class EmployeeRepoImpl implements EmployeeRepo {
 		return emp;
 	}
 
+	@Override
+	public void actualizeRemainingBalance(Employee emp, int newRemainingBalance) {
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		try {
+			conn = DBManager.getInstance().getConnection();
+			if (conn != null) {
+				stmt = conn.prepareStatement("UPDATE Employe SET solde_congés = ? WHERE login = ?");
+				stmt.setInt(1, newRemainingBalance);
+				stmt.setString(2, emp.getLogin());
+				stmt.executeUpdate();
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			if (conn != null) {
+				DBManager.getInstance().cleanup(conn, stmt, rs);
+			}
+		}		
+	}
 
 }

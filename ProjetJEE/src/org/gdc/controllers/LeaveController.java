@@ -4,7 +4,10 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -47,22 +50,31 @@ public class LeaveController extends HttpServlet {
 			response.sendRedirect(request.getContextPath() + "/AuthController");
 		} else {
 			Employee emp = employeeRepo.getEmployee((String) session.getAttribute("username"));
-			
-			if(request.getParameter("rowToDelete") != null) {
-				Date beginDate = null;
-				try {
-					beginDate = new SimpleDateFormat("yyyy-MM-dd").parse(request.getParameter("rowToDelete"));
-				} catch (ParseException e) {
-					e.printStackTrace();
-				}
-				Leave leaveToDelete = leaveRepo.getLeave(emp.getLogin(), beginDate);
-				leaveRepo.deleteLeave(leaveToDelete);
-			}
-			
 			List<Leave> listLeaves = leaveRepo.getLeaves(emp);
 			request.setAttribute("emp", emp);
 			request.setAttribute("listLeaves", listLeaves);
-			this.getServletContext().getRequestDispatcher("/GestionCongesPerso.jsp").forward( request, response );
+
+			//DISPATCHER
+			if(request.getParameter("page") != null) {
+				this.getServletContext().getRequestDispatcher("/" + request.getParameter("page") + ".jsp").forward( request, response );
+			} else {
+
+				//delete leave
+				if(request.getParameter("rowToDelete") != null) {
+					Date beginDate = null;
+					try {
+						beginDate = new SimpleDateFormat("yyyy-MM-dd").parse(request.getParameter("rowToDelete"));
+					} catch (ParseException e) {
+						e.printStackTrace();
+					}
+					Leave leaveToDelete = leaveRepo.getLeave(emp.getLogin(), beginDate);
+					leaveRepo.deleteLeave(leaveToDelete);
+					response.sendRedirect(request.getContextPath() + "/LeaveController");
+				} else {
+					this.getServletContext().getRequestDispatcher("/GestionCongesPerso.jsp").forward( request, response );
+
+				}
+			}
 		}
 	}
 
@@ -70,22 +82,37 @@ public class LeaveController extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//CREATE
+		HttpSession session = request.getSession();
+		Employee emp = employeeRepo.getEmployee((String) session.getAttribute("username"));
+		Map<String, String> errors = new HashMap<String, String>();
+
+		//create leave
 		Date beginDate = null, endDate = null;
+		int duration = 0;
 		try {
 			beginDate = new SimpleDateFormat("yyyy-MM-dd").parse(request.getParameter("bday"));
 			endDate = new SimpleDateFormat("yyyy-MM-dd").parse(request.getParameter("eday"));
+			long diff = endDate.getTime() - beginDate.getTime();
+			duration = (int) TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS);
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
 		String motif = request.getParameter("motif");
 		String type = request.getParameter("type");
-		String comment = request.getParameter("comment");
 
-		HttpSession session = request.getSession();
-		Employee emp = employeeRepo.getEmployee((String) session.getAttribute("username"));
-		Leave leave = new Leave(emp.getLogin(), beginDate, endDate, 0, motif, type, "En attente", null, comment);
-		leaveRepo.addLeave(leave);
+		try {
+			if(emp.getNbLeaves() - duration < 0) {
+				throw new Exception( "Votre solde actuel ne vous permet pas de poser de nouveaux congés" );
+			} else {
+				Leave leave = new Leave(emp.getLogin(), beginDate, endDate, duration, motif, type, "En attente", null, null);
+				leaveRepo.addLeave(leave);
+				employeeRepo.actualizeRemainingBalance(emp, emp.getNbLeaves() - duration);
+			}
+		} catch ( Exception e ) {
+			errors.put("remainingBalance", e.getMessage());
+			request.setAttribute("errors", errors);
+			this.getServletContext().getRequestDispatcher("/DemandeConge.jsp").forward( request, response );
+		}
 		doGet(request, response);
 	}
 

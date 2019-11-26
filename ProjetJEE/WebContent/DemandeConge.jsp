@@ -1,9 +1,4 @@
 <%@ include file="parts/load.jsp"%>
-<%
-String name = (String)request.getAttribute("UserName");
-request.setAttribute("name", name);
-%>
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -24,8 +19,9 @@ request.setAttribute("name", name);
 	<%@ include file="parts/navbar.jsp"%>
 
 	<div class="container">
+		<span>${errors['remainingBalance']}</span>
 
-		<h1>Nouvelle demande de conge : </h1>
+		<h1>Nouvelle demande de congé</h1>
 		<!-- <p>Date: <input type="text" id="datepicker"></p> -->
 		<form class="form-signin" action="LeaveController" method="POST">
 
@@ -64,16 +60,11 @@ request.setAttribute("name", name);
 				</select>
 			</div>
 
-			<div class="form-group">
-				<label>Commentaire</label>
-				<textarea name="comment"></textarea>
-			</div>
-
 			<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Valider</button>
-			<button class="btn btn-outline-danger my-2 my-sm-0"
-				onclick="location.href='GestionCongesPerso.jsp'">Annuler</button>
 		</form>
-
+		
+		<button class="btn btn-outline-danger my-2 my-sm-0"
+			onclick="location.href='LeaveController?page=GestionCongesPerso'">Annuler</button>
 	</div>
 
 	<%@ include file="parts/footer.jsp"%>

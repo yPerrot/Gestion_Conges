@@ -101,18 +101,14 @@
 
 		<div class="row">
 			<div class="col-12">
-				<h3>Solde de conges restant :</h3>
+				<h3>Solde de congés restant :</h3>
 			</div>
 			<div class="col-4">
 				<table class="table table-bordered">
 					<tbody>
 						<tr>
-							<th class="col-md-2">RTT</th>
-							<td class="col-md-2 text-center">10</td>
-						</tr>
-						<tr>
-							<th class="col-md-2">Conges payes</th>
-							<td class="col-md-2 text-center">15</td>
+							<th class="col-md-2">Conges payés</th>
+							<td class="col-md-2 text-center"> ${emp.getNbLeaves()} </td>
 						</tr>
 				</table>
 			</div>
@@ -124,7 +120,7 @@
 			</div>
 			<div class="col-2 align-self-center">
 				<button class="btn btn-secondary"
-					onclick="location.href='DemandeConge.jsp'">Nouveau congé</button>
+					onclick="location.href='LeaveController?page=DemandeConge'">Nouveau congé</button>
 			</div>
 		</div>
 		<table class="table table-bordered">
@@ -147,11 +143,6 @@
 							<td><c:out value="${item.getEndDate()}" /></td>
 							<td><c:out value="${item.getReason()}" /></td>
 							<td><c:out value="${item.getType()}" /></td>
-							<!-- <td class="text-center"><input type="button"
-								id="modifie-site" value="Modifier" />
-								<a href=LeaveController?id='"+${item}+"'></a>
-								<input class="openDeleteModal btn btn-outline-danger my-2 my-sm-0" type="button" id="delete-site" name="delete" value="Supprimer" />
-							</td>-->
 							<td class="text-center">
 								<input class="btn btn-outline-dark" type="button" id="modifie-site" value="Modifier" /> 
 								<input class="btn btn-outline-dark" data-id="${item.getBeginDate()}" data-toggle="modal" data-target="#SuppressionModal"
@@ -192,9 +183,6 @@
 							<td><c:out value="${item.getEndDate()}" /></td>
 							<td><c:out value="${item.getReason()}" /></td>
 							<td><c:out value="${item.getType()}" /></td>
-							<!-- <td class="text-center"><input type="button"
-								id="modifie-site" value="Modifier" /> <input type="button"
-								id="delete-site" value="Supprimer" /></td> -->	
 							<td class="text-center">
 								<input class="btn btn-outline-dark btn-sm" type="button" id="view_info" 
 								 onclick="${System.out.println(item.getType());selectedLeave=item}" data-toggle="modal" data-target="#VisualisationConge" value="..." />

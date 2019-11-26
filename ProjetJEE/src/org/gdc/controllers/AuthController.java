@@ -1,6 +1,7 @@
 package org.gdc.controllers;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -33,6 +34,11 @@ public class AuthController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		//logout
+		if(request.getParameter("logout") != null) {
+			HttpSession session=request.getSession();  
+            session.invalidate();
+		}
 		this.getServletContext().getRequestDispatcher("/Authentification.jsp").forward( request, response );
 	}
 
@@ -40,7 +46,7 @@ public class AuthController extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        // read form fields
+        //login
         String username = request.getParameter("inputUser");
         String password = request.getParameter("inputPassword");
         
