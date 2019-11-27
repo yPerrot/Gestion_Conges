@@ -117,19 +117,20 @@ public class LeaveRepoImpl implements LeaveRepo {
 	}
 
 	@Override
-	public List<Leave> getLeavesToValid(Employee employee) {
-		List<Leave> listLeavesToValid = new ArrayList<Leave>();
+	public List<Leave> getLeavesByState(Employee employee, String state) {
+		List<Leave> listLeaves = new ArrayList<Leave>();
 		Connection conn = null;
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
 		try {
 			conn = DBManager.getInstance().getConnection();
 			if (conn != null) {
-				stmt = conn.prepareStatement("SELECT * FROM Conge WHERE login != ? AND etat = 'En attente'");
+				stmt = conn.prepareStatement("SELECT * FROM Conge WHERE login != ? AND etat = ?");
 				stmt.setString(1, employee.getLogin());
+				stmt.setString(2, state);
 				rs = stmt.executeQuery();
 				while (rs.next()) {
-					listLeavesToValid.add(new Leave(rs.getString("login"), rs.getDate("date_debut"), rs.getDate("date_fin"), rs.getInt("duree"), rs.getString("motif"), rs.getString("type_conges"), rs.getString("etat"), rs.getDate("date_validation"), rs.getString("commentaire")));
+					listLeaves.add(new Leave(rs.getString("login"), rs.getDate("date_debut"), rs.getDate("date_fin"), rs.getInt("duree"), rs.getString("motif"), rs.getString("type_conges"), rs.getString("etat"), rs.getDate("date_validation"), rs.getString("commentaire")));
 				}
 			}
 		} catch (SQLException e) {
@@ -139,7 +140,7 @@ public class LeaveRepoImpl implements LeaveRepo {
 				DBManager.getInstance().cleanup(conn, stmt, rs);
 			}
 		}
-		return listLeavesToValid;
+		return listLeaves;
 	}
 
 	@Override

@@ -85,7 +85,7 @@ request.setAttribute("a", a);
 				<h1>Liste des employés :</h1>
 			</div>
 			<div class="col-2 align-self-center">
-				<button class="btn btn-secondary" onclick="location.href='LeaveController?page=DemandeConge'">Nouvel employé</button>
+				<button class="btn btn-secondary" onclick="location.href='LeaveCreateController'">Nouvel employé</button>
 			</div>
 		</div>
 		<table class="table table-bordered">

@@ -55,7 +55,7 @@ public class AuthController extends HttpServlet {
             HttpSession session = request.getSession();
             session.setAttribute("session", "on");
             session.setAttribute("username", username);
-        	response.sendRedirect(request.getContextPath() + "/LeaveController");
+        	response.sendRedirect(request.getContextPath() + "/LeavePersoController");
         } else {
         	System.out.println("Erreur de mot de passe");
         	response.sendRedirect(request.getContextPath() + "/Authentification.jsp");

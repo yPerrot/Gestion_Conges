@@ -20,7 +20,7 @@ request.setAttribute("e", e);
 		<span>${errors['remainingBalance']}</span>
 
 		<h1>Modification fiche employé :</h1>
-		<form class="form-signin" action="LeaveController" method="POST">
+		<form class="form-signin" action="EmployeeEditController" method="POST">
 
 
 			<div class="form-group">
@@ -80,11 +80,10 @@ request.setAttribute("e", e);
 				<input type="number" class="form-control" id="nbLeaves" min="0" max="50" value="${e.getNbLeaves()}" >
 			</div>
 			
-			<button class="btn btn-outline-success my-2 my-sm-0"
-				onclick="location.href='LeaveController?page=GestionCongesPerso'" type="submit">Valider</button>
-			<button class="btn btn-outline-danger my-2 my-sm-0"
-				onclick="location.href='LeaveController?page=GestionCongesEmployes'">Annuler</button>
+			<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Valider</button>
 		</form>
+		
+		<a href="EmployeeController"><button class="btn btn-outline-danger my-2 my-sm-0">Annuler</button></a>
 		
 	</div>
 

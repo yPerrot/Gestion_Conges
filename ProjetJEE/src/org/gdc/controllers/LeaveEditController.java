@@ -102,9 +102,10 @@ public class LeaveEditController extends HttpServlet {
 		} catch ( Exception e ) {
 			errors.put("remainingBalance", e.getMessage());
 			request.setAttribute("errors", errors);
-			this.getServletContext().getRequestDispatcher("/LeaveController?page=ModificationConge").forward( request, response );
+			this.getServletContext().getRequestDispatcher("/ModificationConge.jsp").forward( request, response );
+		} finally {
+			this.getServletContext().getRequestDispatcher("/LeavePersoController").forward( request, response );
 		}
-		this.getServletContext().getRequestDispatcher("/LeaveController").forward( request, response );
 	}
 
 }

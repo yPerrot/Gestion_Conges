@@ -26,8 +26,8 @@ import org.gdc.repositories.LeaveRepoImpl;
 /**
  * Servlet implementation class LeaveManagerController
  */
-@WebServlet("/LeaveController")
-public class LeaveController extends HttpServlet {
+@WebServlet("/LeavePersoController")
+public class LeavePersoController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private Map<String, String> errors = new HashMap<String, String>();
 	
@@ -37,7 +37,7 @@ public class LeaveController extends HttpServlet {
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
-	public LeaveController() {
+	public LeavePersoController() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
@@ -52,18 +52,10 @@ public class LeaveController extends HttpServlet {
 		} else {
 			Employee emp = employeeRepo.getEmployee((String) session.getAttribute("username"));
 			List<Leave> listLeaves = leaveRepo.getLeaves(emp);
-			List<Leave> listLeavesToValid = leaveRepo.getLeavesToValid(emp);
 			request.setAttribute("emp", emp);
 			request.setAttribute("listLeaves", listLeaves);
-			request.setAttribute("listLeavesToValid", listLeavesToValid);
 
-			// DISPATCHER
-			if(request.getParameter("page") != null) {
-				this.getServletContext().getRequestDispatcher("/" + request.getParameter("page") + ".jsp").forward( request, response );
-			}
-
-			// ACTION
-			else if (request.getParameter("action") != null) {
+			if (request.getParameter("action") != null) {
 				switch (request.getParameter("action")) {
 				case "delete":
 					Date beginDate = null;
@@ -75,49 +67,8 @@ public class LeaveController extends HttpServlet {
 					Leave leaveToDelete = leaveRepo.getLeave(emp.getLogin(), beginDate);
 					leaveRepo.deleteLeave(leaveToDelete);
 					break;
-					
-				case "accept":
-					Date accBeginDate = null;
-					try {
-						accBeginDate = new SimpleDateFormat("yyyy-MM-dd").parse(request.getParameter("upBday"));
-					} catch (ParseException e) {
-						e.printStackTrace();
-					}
-					Leave accLeave = leaveRepo.getLeave(request.getParameter("upLogin"), accBeginDate);
-					accLeave.setState("Valide");
-					accLeave.setValidDate(new Date());
-					accLeave.setWording(request.getParameter("upWording"));
-					leaveRepo.updateLeave(accLeave, accLeave.getBeginDate());
-					employeeRepo.actualizeRemainingBalance(emp, emp.getNbLeaves() - accLeave.getDuration());
-					break;
-
-				case "decline":
-					Date decBeginDate = null;
-					try {
-						decBeginDate = new SimpleDateFormat("yyyy-MM-dd").parse(request.getParameter("upBday"));
-					} catch (ParseException e) {
-						e.printStackTrace();
-					}
-					Leave decLeave = leaveRepo.getLeave(request.getParameter("upLogin"), decBeginDate);
-					decLeave.setState("Refuse");
-					decLeave.setValidDate(new Date());
-					decLeave.setWording(request.getParameter("upWording"));
-					
-					//check wording field filled
-					try {
-						if(request.getParameter("upWording").isEmpty()) {
-							throw new Exception( "Le Commentaire est obligatoire en cas de refus de la demande" );
-						} else {
-							leaveRepo.updateLeave(decLeave, decLeave.getBeginDate());
-						}
-					} catch ( Exception e ) {
-						errors.put("wording", e.getMessage());
-						request.setAttribute("errors", errors);
-						this.getServletContext().getRequestDispatcher("/LeaveController?page=GestionCongesEmployes").forward( request, response );
-					}
-					break;
 				}
-				response.sendRedirect(request.getContextPath() + "/LeaveController");
+				response.sendRedirect(request.getContextPath() + "/LeavePersoController");
 			} else {
 				this.getServletContext().getRequestDispatcher("/GestionCongesPerso.jsp").forward( request, response );
 			}

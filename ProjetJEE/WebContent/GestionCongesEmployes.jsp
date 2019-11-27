@@ -38,7 +38,7 @@
 					<tr>
 						<th scope="row" class="text-center">${loop.index + 1}</th>
 						<td>
-								<form action="LeaveController" method="GET">
+								<form action="LeaveEmpController" method="GET">
 									<p>Employé : ${item.getLogin()}</p>
 									<p>Du  : ${item.getBeginDate()} Au : ${item.getEndDate()}</p>
 									<p>Motif : ${item.getReason()}</p>

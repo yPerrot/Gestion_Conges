@@ -11,7 +11,7 @@
 	$(document).ready( function() {
 		$("#delete-site").click( function() {
 			var row = $(this).data('id');
-			$(".deleteButton").attr("href","LeaveController?action=delete&delBeginDate=" + row);
+			$(".deleteButton").attr("href","LeavePersoController?action=delete&delBeginDate=" + row);
 		});
 		$("#view_info").click(function() {
 			var beginDate = $(this).data('begindate');

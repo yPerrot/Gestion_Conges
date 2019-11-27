@@ -60,7 +60,7 @@
 			<button class="btn btn-outline-success my-2 my-sm-0" type="submit" name="action" value="update">Valider</button>
 		</form>
 		
-		<button class="btn btn-outline-danger my-2 my-sm-0"	onclick="location.href='LeaveController?page=GestionCongesPerso'">Annuler</button>
+		<a href="LeavePersoController"><button class="btn btn-outline-danger my-2 my-sm-0">Annuler</button></a>
 
 	</div>
 

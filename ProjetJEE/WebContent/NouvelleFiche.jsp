@@ -7,7 +7,6 @@
 </head>
 <body>
 
-
 	<%@ include file="parts/navbar.jsp"%>
 
 	<div class="container">
@@ -15,7 +14,7 @@
 
 		<h1>Nouvelle fiche employé :</h1>
 		
-		<form class="form-signin" action="LeaveController" method="POST">
+		<form class="form-signin" action="EmployeeCreateController" method="POST">
 
 			<div class="form-group">
 				<label for="name">Prénom :</label>
@@ -76,12 +75,10 @@
 				<input type="number" class="form-control" id="nbLeaves" min="0" max="50" value="25">
 			</div>
 			
-			<button class="btn btn-outline-success my-2 my-sm-0"
-				onclick="location.href='LeaveController?page=GestionCongesPerso'" type="submit">Valider</button>
-			<button class="btn btn-outline-danger my-2 my-sm-0"
-				onclick="location.href='LeaveController?page=GestionCongesEmployes'">Annuler</button>
+			<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Valider</button>
 		</form>
 		
+		<a href="EmployeeController"><button class="btn btn-outline-danger my-2 my-sm-0">Annuler</button></a>
 	</div>
 
 	<%@ include file="parts/footer.jsp"%>
