@@ -22,10 +22,13 @@ request.setAttribute("name", name);
 			</div>
 			<div class="col">
 				<select class="custom-select">
-					<option selected value="1">One</option>
-					<option value="2">Two</option>
+					<option selected value="1">Type congés par nombre</option>
+					<option value="2">Nombre de congés par mois</option>
 					<option value="3">Three</option>
 				</select>
+			</div>
+			<div class="col-2">
+				<button type="button" class="btn btn-secondary">Afficher</button>
 			</div>
 		</div>
 
@@ -34,6 +37,8 @@ request.setAttribute("name", name);
 				<canvas id="myChart"></canvas>
 			</div>
 		</div>
+		
+		
 
 
 
@@ -42,25 +47,19 @@ request.setAttribute("name", name);
 			var myChart = new Chart(ctx, {
 			    type: 'bar',
 			    data: {
-			        labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+			        labels: ['Validé', 'Supprimé', 'En attente'],
 			        datasets: [{
-			            label: '# of Votes',
-			            data: [12, 19, 3, 5, 2, 3],
+			            label: ['Validé','Validé','Validé'],
+			            data: [12, 19, 3],
 			            backgroundColor: [
 			                'rgba(255, 99, 132, 0.2)',
 			                'rgba(54, 162, 235, 0.2)',
-			                'rgba(255, 206, 86, 0.2)',
-			                'rgba(75, 192, 192, 0.2)',
-			                'rgba(153, 102, 255, 0.2)',
-			                'rgba(255, 159, 64, 0.2)'
+			                'rgba(255, 206, 86, 0.2)'
 			            ],
 			            borderColor: [
 			                'rgba(255, 99, 132, 1)',
 			                'rgba(54, 162, 235, 1)',
-			                'rgba(255, 206, 86, 1)',
-			                'rgba(75, 192, 192, 1)',
-			                'rgba(153, 102, 255, 1)',
-			                'rgba(255, 159, 64, 1)'
+			                'rgba(255, 206, 86, 1)'
 			            ],
 			            borderWidth: 1
 			        }]
