@@ -51,7 +51,6 @@ public class LeaveController extends HttpServlet {
 			response.sendRedirect(request.getContextPath() + "/AuthController");
 		} else {
 			Employee emp = employeeRepo.getEmployee((String) session.getAttribute("username"));
-			// errors = 
 			List<Leave> listLeaves = leaveRepo.getLeaves(emp);
 			List<Leave> listLeavesToValid = leaveRepo.getLeavesToValid(emp);
 			request.setAttribute("emp", emp);
