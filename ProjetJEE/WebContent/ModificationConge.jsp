@@ -1,18 +1,5 @@
 <%@ include file="parts/load.jsp"%>
 <%@page import="org.gdc.models.Leave,java.util.Date,java.util.ArrayList,java.text.SimpleDateFormat"%>
-<<<<<<< HEAD
-=======
-<%
-Leave conge = new Leave("yperrot",new Date(),new Date(),10,"Enfants malades","Formation","Valide",new Date(),"wording");
-request.setAttribute("conge", conge);
-
-SimpleDateFormat formater = new SimpleDateFormat("yyyy-MM-dd");
-request.setAttribute("beginDate", formater.format(conge.getBeginDate()));
-request.setAttribute("endDate", formater.format(conge.getEndDate()));
-
-%>
-
->>>>>>> refs/remotes/origin/Yohan
 <!DOCTYPE html>
 <html>
 <head>
@@ -35,17 +22,12 @@ request.setAttribute("endDate", formater.format(conge.getEndDate()));
 		<form action="LeaveEditController" method="POST">
 			<div class="form-group">
 				<label>Date de debut de congé :</label> <input type="date" name="bday"
-					max="3000-12-31" min="1000-01-01" class="form-control" value="${beginDate}">
+					max="3000-12-31" min="1000-01-01" class="form-control" value="${conge.getBeginDate()}">
 			</div>
 
 			<div class="form-group">
-<<<<<<< HEAD
 				<label>Date de fin de congé :</label> <input type="date" name="eday"
 					min="1000-01-01" max="3000-12-31" class="form-control" value="${conge.getEndDate()}">
-=======
-				<label>Date de fin de congé :</label> <input type="date" name="bday"
-					min="1000-01-01" max="3000-12-31" class="form-control" value="${endDate}">
->>>>>>> refs/remotes/origin/Yohan
 			</div>
 
 			<!-- 	
