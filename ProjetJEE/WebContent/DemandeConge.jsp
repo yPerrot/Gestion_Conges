@@ -23,7 +23,7 @@
 
 		<h1>Nouvelle demande de congé :</h1>
 		<!-- <p>Date: <input type="text" id="datepicker"></p> -->
-		<form class="form-signin" action="LeaveController" method="POST">
+		<form class="form-signin" action="LeaveCreateController" method="POST">
 
 			<div class="form-group">
 				<label>Date de debut de congé :</label> <input type="date" name="bday"

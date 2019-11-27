@@ -1,10 +1,5 @@
 <%@ include file="parts/load.jsp"%>
 <%@page import="org.gdc.models.Leave,java.util.Date,java.util.ArrayList,java.text.SimpleDateFormat"%>
-<%
-Leave conge = new Leave("yperrot",new Date(),new Date(),10,"Formation","Enfants malade","Valide",new Date(),"wording");
-request.setAttribute("conge", conge);
-%>
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -20,17 +15,18 @@ request.setAttribute("conge", conge);
 	<%@ include file="parts/navbar.jsp"%>
 
 	<div class="container">
+		<span>${errors['remainingBalance']}</span>
 
 		<h1>Modification de congé : </h1>
-		<form>
-
+		
+		<form action="LeaveEditController" method="POST">
 			<div class="form-group">
 				<label>Date de debut de congé :</label> <input type="date" name="bday"
 					max="3000-12-31" min="1000-01-01" class="form-control" value="${conge.getBeginDate()}">
 			</div>
 
 			<div class="form-group">
-				<label>Date de fin de congé :</label> <input type="date" name="bday"
+				<label>Date de fin de congé :</label> <input type="date" name="eday"
 					min="1000-01-01" max="3000-12-31" class="form-control" value="${conge.getEndDate()}">
 			</div>
 
@@ -57,9 +53,11 @@ request.setAttribute("conge", conge);
 					<option value="Formation" ${conge.getType() == "Formation" ? 'selected="selected"' : ''}>Formation</option>
 				</select>
 			</div>
+			
+			<input type="hidden" name="oldBday" value=${conge.getBeginDate()}></input>
+			<input type="hidden" name="oldDuration" value=${conge.getBeginDate()}></input>
 
-			<button class="btn btn-outline-success my-2 my-sm-0"
-				onclick="location.href='LeaveController?page=GestionCongesPerso'" type="submit">Valider</button>
+			<button class="btn btn-outline-success my-2 my-sm-0" type="submit" name="action" value="update">Valider</button>
 		</form>
 		
 		<button class="btn btn-outline-danger my-2 my-sm-0"	onclick="location.href='LeaveController?page=GestionCongesPerso'">Annuler</button>

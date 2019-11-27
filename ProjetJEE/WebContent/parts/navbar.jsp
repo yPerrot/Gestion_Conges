@@ -1,10 +1,13 @@
+<%@ include file="load.jsp"%>
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <a href="LeaveController?page=GestionCongesPerso" class="navbar-brand">Gestionnaire de congé</a>
     <div class="collapse navbar-collapse">
-        <a  class="nav-link" href="LeaveController?page=GestionCongesPerso">Mon Espace</a>
-        <a  class="nav-link" href="LeaveController?page=GestionCongesEmployes">Employés</a>
-        <a  class="nav-link" href="./GestionFiches.jsp">Fiches</a>
-        <a  class="nav-link" href="./Statistiques.jsp">Statistiques</a>
+        <a class="nav-link" href="LeaveController">Mon Espace</a>
+        <c:if test="${emp.getTeam() == 'RH'}">
+	        <a class="nav-link" href="LeaveController?page=GestionCongesEmployes">Employés</a>
+	        <a class="nav-link" href="./GestionFiches.jsp">Fiches</a>
+	        <a class="nav-link" href="./Statistiques.jsp">Statistiques</a>
+        </c:if>
     </div>
 
     <div class="my-2 my-lg-0">

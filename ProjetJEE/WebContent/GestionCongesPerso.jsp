@@ -137,7 +137,7 @@
 				<h1>Vos congés en cours de validation</h1>
 			</div>
 			<div class="col-2 align-self-center">
-				<button class="btn btn-secondary" onclick="location.href='LeaveController?page=DemandeConge'">Nouveau congé</button>
+				<a href="LeaveCreateController"><button class="btn btn-secondary">Nouveau congé</button></a>
 			</div>
 		</div>
 		<table class="table table-bordered">
@@ -161,7 +161,7 @@
 							<td><c:out value="${item.getReason()}" /></td>
 							<td><c:out value="${item.getType()}" /></td>
 							<td class="text-center">
-								<a href="LeaveEditController?login=${item.getLogin()}&beginDate=${item.getBeginDate()}"><input class="btn btn-outline-dark" type="button" id="modifie-site" value="Modifier" /></a> 
+								<a href="LeaveEditController?action=get&login=${item.getLogin()}&beginDate=${item.getBeginDate()}"><input class="btn btn-outline-dark" type="button" id="modifie-site" value="Modifier" /></a> 
 								<input class="btn btn-outline-dark" data-id="${item.getBeginDate()}" data-toggle="modal" data-target="#SuppressionModal"
 									type="button" id="delete-site" value="Supprimer" />
 								<input class="btn btn-outline-dark btn-sm" data-toggle="modal" data-target="#VisualisationConge"

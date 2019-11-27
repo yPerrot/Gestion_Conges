@@ -143,19 +143,24 @@ public class LeaveRepoImpl implements LeaveRepo {
 	}
 
 	@Override
-	public void updateLeave(Leave leave) {
+	public void updateLeave(Leave leave, Date oldBeginDate) {
 		Connection conn = null;
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
 		try {
 			conn = DBManager.getInstance().getConnection();
 			if (conn != null) {
-				stmt = conn.prepareStatement("UPDATE Conge SET etat = ?, date_validation = ?, commentaire = ? WHERE login = ? AND date_debut = ?");
-				stmt.setString(1, leave.getState());
-				stmt.setDate(2, new java.sql.Date(leave.getValidDate().getTime()));
-				stmt.setString(3, leave.getWording());
-				stmt.setString(4, leave.getLogin());
-				stmt.setDate(5, new java.sql.Date(leave.getBeginDate().getTime()));
+				stmt = conn.prepareStatement("UPDATE Conge SET date_debut = ?, date_fin = ?, duree = ?, motif = ?, type_conges = ?, etat = ?, date_validation = ?, commentaire = ? WHERE login = ? AND date_debut = ?");
+				stmt.setDate(1, new java.sql.Date(leave.getBeginDate().getTime()));
+				stmt.setDate(2, new java.sql.Date(leave.getEndDate().getTime()));
+				stmt.setInt(3, leave.getDuration());
+				stmt.setString(4, leave.getReason());
+				stmt.setString(5, leave.getType());
+				stmt.setString(6, leave.getState());
+				stmt.setObject(7, leave.getValidDate() != null ? new java.sql.Date(leave.getValidDate().getTime()) : null, java.sql.Types.DATE);
+				stmt.setString(8, leave.getWording());
+				stmt.setString(9, leave.getLogin());
+				stmt.setDate(10, new java.sql.Date(oldBeginDate.getTime()));
 				stmt.executeUpdate();
 			}
 		} catch (SQLException e) {
