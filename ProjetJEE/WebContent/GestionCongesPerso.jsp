@@ -160,7 +160,7 @@
 							<td><c:out value="${item.getReason()}" /></td>
 							<td><c:out value="${item.getType()}" /></td>
 							<td class="text-center">
-								<a href="LeaveEditController?action=get&login=${item.getLogin()}&beginDate=${item.getBeginDate()}"><input class="btn btn-outline-dark" type="button" id="modifie-site" value="Modifier" /></a> 
+								<a href="LeaveEditController?login=${item.getLogin()}&beginDate=${item.getBeginDate()}"><input class="btn btn-outline-dark" type="button" id="modifie-site" value="Modifier" /></a> 
 								<input class="btn btn-outline-dark" data-id="${item.getBeginDate()}" data-toggle="modal" data-target="#SuppressionModal"
 									type="button" id="delete-site" value="Supprimer" />
 								<input class="btn btn-outline-dark btn-sm" data-toggle="modal" data-target="#VisualisationConge"

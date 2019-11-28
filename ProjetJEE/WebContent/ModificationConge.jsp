@@ -53,9 +53,6 @@
 					<option value="Formation" ${conge.getType() == "Formation" ? 'selected="selected"' : ''}>Formation</option>
 				</select>
 			</div>
-			
-			<input type="hidden" name="oldBday" value=${conge.getBeginDate()}></input>
-			<input type="hidden" name="oldDuration" value=${conge.getBeginDate()}></input>
 
 			<button class="btn btn-outline-success my-2 my-sm-0" type="submit" name="action" value="update">Valider</button>
 		</form>

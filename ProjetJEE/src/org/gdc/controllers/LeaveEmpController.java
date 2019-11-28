@@ -62,9 +62,10 @@ public class LeaveEmpController extends HttpServlet {
 					Date accBeginDate = null;
 					try {
 						accBeginDate = new SimpleDateFormat("yyyy-MM-dd").parse(request.getParameter("upBday"));
+
 					} catch (ParseException e) {
 						e.printStackTrace();
-					}
+					} 
 					Leave accLeave = leaveRepo.getLeave(request.getParameter("upLogin"), accBeginDate);
 					accLeave.setState("Valide");
 					accLeave.setValidDate(new Date());
@@ -72,6 +73,7 @@ public class LeaveEmpController extends HttpServlet {
 					leaveRepo.updateLeave(accLeave, accLeave.getBeginDate());
 					Employee updateEmp = employeeRepo.getEmployee(accLeave.getLogin());
 					employeeRepo.actualizeRemainingBalance(updateEmp, updateEmp.getNbLeaves() - accLeave.getDuration());
+					response.sendRedirect(request.getContextPath() + "/LeaveEmpController");
 					break;
 
 				case "decline":
@@ -96,11 +98,12 @@ public class LeaveEmpController extends HttpServlet {
 					} catch ( Exception e ) {
 						errors.put("wording", e.getMessage());
 						request.setAttribute("errors", errors);
+						this.getServletContext().getRequestDispatcher("/GestionCongesEmployes.jsp").forward( request, response );
+					} finally {
 						this.getServletContext().getRequestDispatcher("/LeaveEmpController").forward( request, response );
 					}
 					break;
 				}
-				response.sendRedirect(request.getContextPath() + "/LeaveEmpController");
 			} else {
 				this.getServletContext().getRequestDispatcher("/GestionCongesEmployes.jsp").forward( request, response );
 			}
@@ -111,7 +114,6 @@ public class LeaveEmpController extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
 

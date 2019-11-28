@@ -56,38 +56,34 @@ public class LeaveCreateController extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
-		if(session.getAttribute("username") == null) {
-			response.sendRedirect(request.getContextPath() + "/AuthController");
-		} else {
-			Employee emp = employeeRepo.getEmployee((String) session.getAttribute("username"));
-			request.setAttribute("emp", emp);
+		Employee emp = employeeRepo.getEmployee((String) session.getAttribute("username"));
+		request.setAttribute("emp", emp);
 
-			Date beginDate = null, endDate = null;
-			int duration = 0;
-			try {
-				beginDate = new SimpleDateFormat("yyyy-MM-dd").parse(request.getParameter("bday"));
-				endDate = new SimpleDateFormat("yyyy-MM-dd").parse(request.getParameter("eday"));
-				long diff = endDate.getTime() - beginDate.getTime();
-				duration = (int) TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS);
-			} catch (ParseException e) {}
-			String motif = request.getParameter("motif");
-			String type = request.getParameter("type");
+		Date beginDate = null, endDate = null;
+		int duration = 0;
+		try {
+			beginDate = new SimpleDateFormat("yyyy-MM-dd").parse(request.getParameter("bday"));
+			endDate = new SimpleDateFormat("yyyy-MM-dd").parse(request.getParameter("eday"));
+			long diff = endDate.getTime() - beginDate.getTime();
+			duration = (int) TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS);
+		} catch (ParseException e) {}
+		String motif = request.getParameter("motif");
+		String type = request.getParameter("type");
 
-			//check remaining leave balance
-			try {
-				if(emp.getNbLeaves() - duration < 0) {
-					throw new Exception( "Votre solde actuel ne vous permet pas de poser de nouveaux congés" );
-				} else {
-					Leave leave = new Leave(emp.getLogin(), beginDate, endDate, duration, motif, type, "En attente", null, null);
-					leaveRepo.addLeave(leave);
-				}
-			} catch ( Exception e ) {
-				errors.put("remainingBalance", e.getMessage());
-				request.setAttribute("errors", errors);
-				this.getServletContext().getRequestDispatcher("/DemandeConge.jsp").forward( request, response );
-			} finally {
-				this.getServletContext().getRequestDispatcher("/LeavePersoController").forward( request, response );
+		//check remaining leave balance
+		try {
+			if(emp.getNbLeaves() - duration < 0) {
+				throw new Exception( "Votre solde actuel ne vous permet pas de poser de nouveaux congés" );
+			} else {
+				Leave leave = new Leave(emp.getLogin(), beginDate, endDate, duration, motif, type, "En attente", null, null);
+				leaveRepo.addLeave(leave);
 			}
+		} catch ( Exception e ) {
+			errors.put("remainingBalance", e.getMessage());
+			request.setAttribute("errors", errors);
+			this.getServletContext().getRequestDispatcher("/DemandeConge.jsp").forward( request, response );
+		} finally {
+			this.getServletContext().getRequestDispatcher("/LeavePersoController").forward( request, response );
 		}
 	}
 

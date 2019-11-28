@@ -1,11 +1,4 @@
 <%@ include file="parts/load.jsp"%>
-<%@page import="org.gdc.models.Employee"%>
-<%@page import="java.util.ArrayList"%>
-<%
-ArrayList a = new ArrayList<Employee>();
-a.add(new Employee("lrollin","Rollin","Lucas","7 rue de la justice","Auzances","23700","RH","Chef d'equipe","lrollin@enssat.fr",13));
-request.setAttribute("a", a);
-%>
 
 <!DOCTYPE html>
 <html>
@@ -85,15 +78,15 @@ request.setAttribute("a", a);
 				<h1>Liste des employés :</h1>
 			</div>
 			<div class="col-2 align-self-center">
-				<button class="btn btn-secondary" onclick="location.href='LeaveCreateController'">Nouvel employé</button>
+				<button class="btn btn-secondary" onclick="location.href='EmployeeCreateController'">Nouvel employé</button>
 			</div>
 		</div>
 		<table class="table table-bordered">
 			<thead class="thead-light">
 				<tr>
 					<th scope="col">#</th>
-					<th scope="col">Nom</th>
 					<th scope="col">Prénom</th>
+					<th scope="col">Nom</th>
 					<th scope="col">Equipe</th>
 					<th scope="col">Role</th>
 					<th scope="col">Mail</th>
@@ -110,6 +103,9 @@ request.setAttribute("a", a);
 						<td><c:out value="${item.getRole()}" /></td>
 						<td><c:out value="${item.getMail()}" /></td>
 						<td class="text-center">
+							<a href="EmployeeEditController?login=${item.getLogin()}"><input class="btn btn-outline-dark" type="button" id="modifie-site" value="Modifier" /></a> 
+							<input class="btn btn-outline-dark" data-id="${item.getLogin()}" data-toggle="modal" data-target="#SuppressionModal"
+									type="button" id="delete-site" value="TODOSUPPR" />
 							<input class="btn btn-outline-dark btn-sm" data-toggle="modal" data-target="#viewFiche"
 								data-login="${item.getLogin()}" data-fname="${item.getFname()}" 
 								data-name="${item.getName()}" data-address="${item.getAddress()}" 
