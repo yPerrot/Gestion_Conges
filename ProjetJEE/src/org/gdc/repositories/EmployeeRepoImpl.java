@@ -161,4 +161,30 @@ public class EmployeeRepoImpl implements EmployeeRepo {
 			}
 		}
 	}
+
+	@Override
+	public Integer countEmployeesByTeam(String team) {
+		int nbEmployees = 0;
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		try {
+			conn = DBManager.getInstance().getConnection();
+			if (conn != null) {
+				stmt = conn.prepareStatement("SELECT count(*) as total FROM Employe WHERE equipe = ?");
+				stmt.setString(1, team);
+				rs = stmt.executeQuery();
+				while (rs.next()) {
+					nbEmployees = rs.getInt("total");
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			if (conn != null) {
+				DBManager.getInstance().cleanup(conn, stmt, rs);
+			}
+		}
+		return nbEmployees;
+	}
 }

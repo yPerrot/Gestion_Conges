@@ -10,4 +10,5 @@ public interface EmployeeRepo {
 	public List<Employee> getEmployees();
 	public void addEmployee(Employee newEmp);
 	public void updateEmployee(Employee employee, String login);
+	public Integer countEmployeesByTeam(String team);
 }

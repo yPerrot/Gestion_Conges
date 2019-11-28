@@ -13,17 +13,14 @@
 
 		<div class="row m-3">
 			<div class="col-auto">
-				<h2>Statistique :</h2>
+				<h2>Statistiques :</h2>
 			</div>
 			<div class="col">
-				<select class="custom-select" id="chartList">
+				<select onchange="showChart()" class="custom-select" id="chartList">
 					<option selected value="1">Nombre de congés par type</option>
 					<option value="2">Nombre de congés validé par mois, sur la dernière année</option>
 					<option value="3">Nombre d'employés par domaine</option>
 				</select>
-			</div>
-			<div class="col-2">
-				<button type="button" class="btn btn-secondary" onclick="showChart()">Afficher</button>
 			</div>
 		</div>
 
@@ -34,12 +31,15 @@
 		</div>
 
 		<script>
+			let data1 = ${data1};
+			let data2 = ${data2};
+			let data3 = ${data3}
+		
 			let canvas = document.getElementById('myChart')
 			var ctx = canvas.getContext('2d');
 			var myChart;
 			showChart();
-			
-			
+
 			function showChart() {
 				let l = document.getElementById("chartList");
 				let idGraphe = l.options[l.selectedIndex].value;
@@ -53,12 +53,7 @@
 					        labels: ['Validé','Refusé','En attente'],
 					        datasets: [{
 					            label: 'Nombre de congés par type',
-					            
-					            //Valeur à récupérer en BDD !!!
-					            // DEBUT VALEUR
-					            data: [12, 19, 3],
-					            //FIN VALUER 
-					            
+					            data: data1,					            
 					            backgroundColor: [
 					                'rgba(255, 99, 132, 0.2)',
 					                'rgba(54, 162, 235, 0.2)',
@@ -86,7 +81,7 @@
 					        tooltips: {
 					            callbacks: {
 					               label: function(tooltipItem) {
-					                      return tooltipItem.yLabel;
+					            	   return tooltipItem.yLabel;
 					               }
 					            }
 					        }
@@ -101,12 +96,8 @@
 						    data: {
 						        labels: getListMonth(),
 						        datasets: [{
-						            label: 'Nombre de congés prit par mois',
-						            
-						            //Valeur à récupérer en BDD !!!
-						            // DEBUT VALEUR
-						            data: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
-						            //FIN VALUER 
+						            label: 'Nombre de congés pris par mois',
+						            data: data2,
 						            fill: false,
 						            backgroundColor: [
 						                'rgba(255, 99, 132, 0.2)'
@@ -147,11 +138,7 @@
 						        labels: ['Comptabilité', 'Informatique', 'En RH'],
 						        datasets: [{
 						            label : "Nombre d'employés par domaine",
-						            //Valeur à récupérer en BDD !!!
-						            // DEBUT VALEUR
-						            data: [4, 8, 2],
-						            //FIN VALUER 
-						            
+						            data: data3,
 						            backgroundColor: [
 						                'rgba(75, 192, 192, 0.2)',
 						                'rgba(153, 102, 255, 0.2)',

@@ -13,4 +13,6 @@ public interface LeaveRepo {
 	void deleteLeave(Leave leaveToDelete);
 	List<Leave> getLeavesByState(Employee employee, String state);
 	void updateLeave(Leave leave, Date oldBeginDate);
+	Integer countLeavesByState(String state);
+	Integer countLeavesByMonth(int month);
 }

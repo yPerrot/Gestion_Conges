@@ -172,4 +172,56 @@ public class LeaveRepoImpl implements LeaveRepo {
 			}
 		}
 	}
+
+	@Override
+	public Integer countLeavesByState(String state) {
+		int nbLeaves = 0;
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		try {
+			conn = DBManager.getInstance().getConnection();
+			if (conn != null) {
+				stmt = conn.prepareStatement("SELECT count(*) as total FROM Conge WHERE etat = ?");
+				stmt.setString(1, state);
+				rs = stmt.executeQuery();
+				while (rs.next()) {
+					nbLeaves = rs.getInt("total");
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			if (conn != null) {
+				DBManager.getInstance().cleanup(conn, stmt, rs);
+			}
+		}
+		return nbLeaves;
+	}
+
+	@Override
+	public Integer countLeavesByMonth(int month) {
+		int nbLeaves = 0;
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		try {
+			conn = DBManager.getInstance().getConnection();
+			if (conn != null) {
+				stmt = conn.prepareStatement("SELECT count(*) as total FROM Conge WHERE MONTH(date_debut) = ?");
+				stmt.setInt(1, month);
+				rs = stmt.executeQuery();
+				while (rs.next()) {
+					nbLeaves = rs.getInt("total");
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			if (conn != null) {
+				DBManager.getInstance().cleanup(conn, stmt, rs);
+			}
+		}
+		return nbLeaves;
+	}
 }
