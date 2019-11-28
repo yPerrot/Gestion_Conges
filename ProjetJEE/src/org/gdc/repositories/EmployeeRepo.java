@@ -11,4 +11,5 @@ public interface EmployeeRepo {
 	public void addEmployee(Employee newEmp);
 	public void updateEmployee(Employee employee, String login);
 	public Integer countEmployeesByTeam(String team);
+	public void deleteEmployee(Employee empToDelete);
 }

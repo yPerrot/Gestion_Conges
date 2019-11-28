@@ -7,6 +7,10 @@
 <title>Gestion des fiches employés</title>
 <script>
 	$(document).ready( function() {
+		$("#delete-site").click( function() {
+			var row = $(this).data('id');
+			$(".deleteButton").attr("href","EmployeeController?action=delete&delLogin=" + row);
+		});
 		$("#view-fiche").click(function() {
 			var login = $(this).data('login');
 			var fname = $(this).data('fname');

@@ -113,7 +113,6 @@ public class LeaveRepoImpl implements LeaveRepo {
 				DBManager.getInstance().cleanup(conn, stmt, rs);
 			}
 		}
-	
 	}
 
 	@Override

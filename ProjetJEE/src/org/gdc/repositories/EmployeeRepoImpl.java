@@ -187,4 +187,29 @@ public class EmployeeRepoImpl implements EmployeeRepo {
 		}
 		return nbEmployees;
 	}
+	
+	@Override
+	public void deleteEmployee(Employee empToDelete) {
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		PreparedStatement stmt2 = null;
+		ResultSet rs = null;
+		try {
+			conn = DBManager.getInstance().getConnection();
+			if (conn != null) {
+				stmt = conn.prepareStatement("DELETE FROM Employe WHERE login = ?"); 
+				stmt.setString(1, empToDelete.getLogin());
+				stmt.executeUpdate();
+				stmt2 = conn.prepareStatement("DELETE FROM Authentification WHERE login = ?"); 
+				stmt2.setString(1, empToDelete.getLogin());
+				stmt2.executeUpdate();
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			if (conn != null) {
+				DBManager.getInstance().cleanup(conn, stmt, rs);
+			}
+		}
+	}
 }
