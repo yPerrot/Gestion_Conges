@@ -99,14 +99,6 @@
 						  <li class="list-group-item"><b>Date de validation : </b><span id="viewValidDate"></span></li>
 						  <li class="list-group-item"><b>Commentaire : </b><span id="viewWording"></span></li>
 						</ul> 
-<!-- 							<p>Date de debut : <span id="viewBeginDate"></span></p>
-							<p>Date de fin : <span id="viewEndDate"></span></p>
-							<p>Durée du congé : <span id="viewDuration"></span></p>
-							<p>Raison : <span id="viewReason"></span></p>
-							<p>Type du congé : <span id="viewType"></span></p>
-							<p>Etat : <span id="viewState"></span></p>
-							<p>Date de validation : <span id="viewValidDate"></span></p>
-							<p>Commentaire : <span id="viewWording"></span></p> -->
 						</div>
 					</div>
 				</div>

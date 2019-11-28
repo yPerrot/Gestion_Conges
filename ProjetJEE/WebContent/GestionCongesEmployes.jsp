@@ -46,9 +46,9 @@
 									<input type="hidden" name="upLogin" value=${item.getLogin()}></input>
 									<input type="hidden" name="upBday" value=${item.getBeginDate()}></input>
 									
-									<div class="form-group">
+									<div class="form-group w-50">
 										<label for="upWording">Laisser un commentaire :</label>
-										<textarea class="form-control" id="upWording" name="upWording" rows="3"></textarea>
+										<textarea class="form-control" id="upWording" name="upWording" rows="3" cols="0"></textarea>
 										<!-- <input type="text" class="form-control" id="upWording" placeholder="Commentaire"> -->
 									</div>
   

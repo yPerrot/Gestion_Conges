@@ -40,6 +40,37 @@
 
 	<%@ include file="parts/navbar.jsp"%>
 	
+	<div class="modal fade" id="SuppressionModal" tabindex="-1" role="dialog"
+		aria-labelledby="SuppressionModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="SuppressionModalLabel">Validation suppression</h5>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<div class="row">
+						<div class="col">
+							<p>Voulez-vous validation la suppression de la fiche : </p>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col text-right">
+
+							<button type="button" class="btn btn-secondary"
+								data-dismiss="modal">Annuler</button>
+							<a class="deleteButton"><button type="button"
+									class="btn btn-primary">Supprimer</button></a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
 	<div class="modal fade" id="viewFiche" tabindex="-1" role="dialog"
 		aria-labelledby="viewFicheLabel" aria-hidden="true">
 		<div class="modal-dialog" role="document">
@@ -105,7 +136,7 @@
 						<td class="text-center">
 							<a href="EmployeeEditController?login=${item.getLogin()}"><input class="btn btn-outline-dark" type="button" id="modifie-site" value="Modifier" /></a> 
 							<input class="btn btn-outline-dark" data-id="${item.getLogin()}" data-toggle="modal" data-target="#SuppressionModal"
-									type="button" id="delete-site" value="TODOSUPPR" />
+									type="button" id="delete-site" value="Supprimer" />
 							<input class="btn btn-outline-dark btn-sm" data-toggle="modal" data-target="#viewFiche"
 								data-login="${item.getLogin()}" data-fname="${item.getFname()}" 
 								data-name="${item.getName()}" data-address="${item.getAddress()}" 
