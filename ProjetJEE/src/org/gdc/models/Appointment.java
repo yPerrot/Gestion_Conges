@@ -2,15 +2,15 @@ package org.gdc.models;
 
 import java.util.Date;
 
-public class Appointement {
+public class Appointment {
 	private Employee employe;
 	private Date apptDate;
 	private String wording;
 
-	public Appointement() {
+	public Appointment() {
 	}
 
-	public Appointement(Employee employe, Date apptDate, String wording) {
+	public Appointment(Employee employe, Date apptDate, String wording) {
 		this.employe = employe;
 		this.apptDate = apptDate;
 		this.wording = wording;

@@ -2,44 +2,18 @@
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd" id="WebApp_ID" version="4.0">
   <display-name>ProjetJEE</display-name>
   
-  <!-- Hello World -->
-  <servlet>
-    <description></description>
-    <display-name>HelloWorld</display-name>
-    <servlet-name>HelloWorld</servlet-name>
-    <servlet-class>org.testProject.HelloWorld</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>HelloWorld</servlet-name>
-    <url-pattern>/HelloWorld</url-pattern>
-  </servlet-mapping>
-
-  
   <!-- Authentification -->
   <servlet>
     <description></description>
-    <display-name>Authentication</display-name>
-    <servlet-name>Authentication</servlet-name>
-    <servlet-class>org.testProject.Authentication</servlet-class>
+    <display-name>AuthController</display-name>
+    <servlet-name>AuthController</servlet-name>
+    <servlet-class>org.gdc.controllers.AuthController</servlet-class>
   </servlet>
   <servlet-mapping>
-    <servlet-name>Authentication</servlet-name>
-    <url-pattern>/Authentication</url-pattern>
-	<!-- <url-pattern>/</url-pattern> -->
+    <servlet-name>AuthController</servlet-name>
+    <url-pattern>/</url-pattern>
   </servlet-mapping>
   
-    
-  <!-- GestionPerso -->
-  <servlet>
-    <description></description>
-    <display-name>GestionPerso</display-name>
-    <servlet-name>GestionPerso</servlet-name>
-    <servlet-class>org.testProject.User</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>GestionPerso</servlet-name>
-    <url-pattern>/GestionPerso</url-pattern>
-  </servlet-mapping>
   
   <welcome-file-list>
     <welcome-file>index.html</welcome-file>

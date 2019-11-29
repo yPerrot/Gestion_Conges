@@ -4,7 +4,10 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -23,17 +26,18 @@ import org.gdc.repositories.LeaveRepoImpl;
 /**
  * Servlet implementation class LeaveManagerController
  */
-@WebServlet("/LeaveController")
-public class LeaveController extends HttpServlet {
+@WebServlet("/LeavePersoController")
+public class LeavePersoController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-
+	private Map<String, String> errors = new HashMap<String, String>();
+	
 	private LeaveRepo leaveRepo = new LeaveRepoImpl();
 	private EmployeeRepo employeeRepo = new EmployeeRepoImpl();
 
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
-	public LeaveController() {
+	public LeavePersoController() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
@@ -46,14 +50,28 @@ public class LeaveController extends HttpServlet {
 		if(session.getAttribute("username") == null) {
 			response.sendRedirect(request.getContextPath() + "/AuthController");
 		} else {
-			if(request.getParameter("delete") != null) {
-				System.out.println("delete pressed" + request.getParameter("id"));
-			}
 			Employee emp = employeeRepo.getEmployee((String) session.getAttribute("username"));
 			List<Leave> listLeaves = leaveRepo.getLeaves(emp);
 			request.setAttribute("emp", emp);
 			request.setAttribute("listLeaves", listLeaves);
-			this.getServletContext().getRequestDispatcher("/GestionCongesPerso.jsp").forward( request, response );
+
+			if (request.getParameter("action") != null) {
+				switch (request.getParameter("action")) {
+				case "delete":
+					Date beginDate = null;
+					try {
+						beginDate = new SimpleDateFormat("yyyy-MM-dd").parse(request.getParameter("delBeginDate"));
+					} catch (ParseException e) {
+						e.printStackTrace();
+					}
+					Leave leaveToDelete = leaveRepo.getLeave(emp.getLogin(), beginDate);
+					leaveRepo.deleteLeave(leaveToDelete);
+					break;
+				}
+				response.sendRedirect(request.getContextPath() + "/LeavePersoController");
+			} else {
+				this.getServletContext().getRequestDispatcher("/GestionCongesPerso.jsp").forward( request, response );
+			}
 		}
 	}
 
@@ -61,22 +79,6 @@ public class LeaveController extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		Date beginDate = null, endDate = null;
-		try {
-			beginDate = new SimpleDateFormat("yyyy-MM-dd").parse(request.getParameter("bday"));
-			endDate = new SimpleDateFormat("yyyy-MM-dd").parse(request.getParameter("eday"));
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
-		String motif = request.getParameter("motif");
-		String type = request.getParameter("type");
-		String comment = request.getParameter("comment");
-
-		HttpSession session = request.getSession();
-		Employee emp = employeeRepo.getEmployee((String) session.getAttribute("username"));
-		Leave leave = new Leave(emp.getLogin(), beginDate, endDate, 0, motif, type, "En attente", null, comment);
-		leaveRepo.addLeave(leave);
 		doGet(request, response);
 	}
-
 }
