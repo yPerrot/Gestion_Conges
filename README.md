@@ -1,6 +1,7 @@
 # Gestion_Conges
 
 1. Base de données
+
 a) Se connecter à l'interpreteur mysql
   mysql -u root -p ( mot de passe : tonystark sur la VM)
 
@@ -9,6 +10,7 @@ b) Créer la base de données, les tables et les données
 
 
 2. Environnement
+
 a) Lancer l'IDE Eclipse
 
 b) Ajouter le JRE 12
@@ -24,6 +26,7 @@ c) Ajouter le serveur Tomcat 9
 
 
 3. Application
+
 a) Télécharger le projet
   git clone https://github.com/yPerrot/Gestion_Conges.git
 
@@ -45,5 +48,6 @@ f) Lancer le serveur d'application
 
 
 4. Lancement
+
 a) Ouvrir le naviguateur et acceder à l'application
   url : localhost:8080/ProjetJEE
