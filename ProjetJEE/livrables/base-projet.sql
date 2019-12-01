@@ -1,7 +1,10 @@
-##CREATE DATABASE ProjetJEE;
-
-##USE ProjetJEE;
 ##DROP TABLE Authentification,Conge,Employe,Ref_Equipes,Ref_Etat_Conges,Ref_Type_Conges,Ref_Fonction,Ref_Motif_Conges,Agenda;
+
+
+
+CREATE DATABASE ProjetJEE;
+
+USE ProjetJEE;
 
 CREATE TABLE Ref_Fonction (
     nom_fonction varchar(30) NOT NULL,
@@ -77,8 +80,6 @@ INSERT into Employe VALUES ("nguzzo","Nicolas","GUZZO","4 rue de verte","Lannion
 INSERT into Employe VALUES ("cyoudec","Clement","YOUDEC","4 rue de rouge","Lannion","22300","RH","Membre d'équipe","cyoudec@enssat.fr",20);
 INSERT into Employe VALUES ("yperrot","Yohan","PERROT","4 rue de bleu","Lannion","22300","Informatique","Chef d'équipe","yperrot@enssat.fr",3);
 INSERT into Employe VALUES ("lgagnant","Laurre","GAGNANT","4 rue de orange","Lannion","22300","Informatique","Membre d'équipe","lgagnant@enssat.fr",3);
-INSERT into Employe VALUES ("mboue","Martin","BOUE","4 rue de violet","Lannion","22300","Comptabilité","Chef d'équipe","mboue@enssat.fr",1);
-INSERT into Employe VALUES ("tlegoff","Thomas","LE GOFF","4 rue de jaune","Lannion","22300","Comptabilité","Membre d'équipe","tlegoff@enssat.fr",50);
 
 CREATE TABLE Conge (
     login varchar(30) NOT NULL,
@@ -101,11 +102,6 @@ CREATE TABLE Conge (
 		REFERENCES Ref_Etat_Conges (etat)
 );
 
-INSERT INTO Conge VALUES ("nguzzo","2019-11-22","2019-11-24",2,"Maladie","CP",DEFAULT,DEFAULT,NULL);
-INSERT INTO Conge VALUES ("nguzzo","2019-12-22","2019-12-27",5,"Maladie","CP",DEFAULT,DEFAULT,NULL);
-INSERT INTO Conge VALUES ("mboue","2019-11-15","2019-11-17",2,"Enfants malades","CP",DEFAULT,DEFAULT,NULL);
-
-
 CREATE TABLE Authentification (
     login varchar(30) NOT NULL,
 	password varchar(70) NOT NULL,
@@ -113,10 +109,10 @@ CREATE TABLE Authentification (
 	FOREIGN KEY (login)
 		REFERENCES Employe (login)
 );
-
-INSERT INTO Authentification VALUES ("cyoudec", "admin");
-INSERT INTO Authentification VALUES ("lgagnant", "admin");
-
+INSERT into Authentification VALUES ("nguzzo","nguzzo");
+INSERT into Authentification VALUES ("cyoudec","cyoudec");
+INSERT into Authentification VALUES ("yperrot","yperrot");
+INSERT into Authentification VALUES ("lgagnant","lgagnant");
 
 CREATE TABLE Rendez_vous (
     login varchar(30) NOT NULL,
@@ -126,3 +122,7 @@ CREATE TABLE Rendez_vous (
 	FOREIGN KEY (login)
 		REFERENCES Employe (login)
 );
+
+INSERT INTO Rendez_vous VALUES ("nguzzo","2019-11-22", "Médecin");
+INSERT INTO Rendez_vous VALUES ("nguzzo","2019-11-23", "Visite client");
+INSERT INTO Rendez_vous VALUES ("cyoudec","2019-11-23", "Coiffeur");

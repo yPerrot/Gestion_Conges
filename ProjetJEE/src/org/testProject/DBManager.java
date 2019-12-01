@@ -12,13 +12,17 @@ import java.util.ResourceBundle;
 public class DBManager {
 
 	private static DBManager instance;
+	
+	private ResourceBundle properties;
+	
+	private static String resourceBundle = "config";
 
 	private DBManager() {
+		properties = ResourceBundle.getBundle(resourceBundle);
 
 		try {
-			Class.forName("com.mysql.cj.jdbc.Driver");
+			Class.forName(properties.getString("DB_DRIVER"));
 		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -37,7 +41,7 @@ public class DBManager {
 
 		Connection connection = null;
 		try {
-			connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/ProjetJEE", "root", "mysql");
+			connection = DriverManager.getConnection(properties.getString("JDBC_URL"), properties.getString("DB_LOGIN"), properties.getString("DB_PASSWORD"));
 
 		} catch (SQLException sqle) {
 			sqle.printStackTrace();
